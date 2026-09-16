@@ -32,19 +32,21 @@ O que muda com frequência está reunido no começo do `<script>`, em dois bloco
 
 ### A música
 
-O convite toca um **arquivo de áudio hospedado junto com ele** — não usa o
-YouTube. O vídeo escolhido pelos noivos tem a reprodução bloqueada fora do
-site do YouTube, então embutir não funciona: o navegador se recusa a tocar e
-a única saída seria mandar o convidado para fora do convite.
+O convite tenta duas fontes, nesta ordem:
 
-Para colocar a música:
+1. **`CONFIG.musica`** — um arquivo de áudio hospedado nesta mesma pasta
+   (o padrão é `musica.mp3`). É o caminho mais confiável: toca sempre, não
+   depende de ninguém.
+2. **`CONFIG.musicaYoutube`** — se o arquivo não existir, o convite tenta o
+   vídeo do YouTube. Só funciona se o dono do vídeo permitir a reprodução fora
+   do YouTube; muitos vídeos bloqueiam isso, e não há nada a fazer do nosso lado.
 
-1. Suba o arquivo de áudio (`.mp3`) nesta pasta, junto do `index.html`
-2. Escreva o nome dele em `CONFIG.musica` (o padrão é `musica.mp3`)
+Se nenhuma das duas tocar, o botão de música simplesmente não aparece e o
+convite segue normal. Em nenhum caso o convidado é mandado para fora.
 
-Enquanto o arquivo não existir, o convite funciona normalmente — o botão de
-música simplesmente não aparece. Para deixar o convite sem música de vez, é só
-pôr `musica: ''`.
+Para garantir a música, suba um `.mp3` nesta pasta — ele passa na frente do
+YouTube automaticamente, sem precisar mexer em mais nada. Para deixar o convite
+sem música de vez, ponha os dois campos vazios (`''`).
 | `MANUAL` | os tópicos do Manual dos convidados (título, texto e ícone) |
 
 Para acrescentar um tópico ao manual, copie uma linha do `MANUAL` e troque o
@@ -72,6 +74,8 @@ hospedagem estática. Depois é só mandar o link no WhatsApp.
   apenas tira o mudo — por isso ela entra na hora, sem espera. Nenhum navegador
   de celular permite som antes de um toque do usuário, então esse é o mais
   automático que dá para ser.
-- Se o arquivo de áudio faltar ou o formato não for suportado, o botão de
-  música some e o convite segue normal — nunca manda o convidado para fora
+- Se nenhuma fonte de música tocar, o botão some e o convite segue normal —
+  nunca manda o convidado para fora
+- O player do YouTube fica num contêiner recortado a 1px e invisível, mas o
+  iframe em si continua com tamanho normal: navegadores tratam melhor a mídia assim
 - Respeita `prefers-reduced-motion` para quem prefere menos animação

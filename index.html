@@ -222,6 +222,9 @@
   #musicToggle:hover{background:var(--olive);color:#fff;border-color:var(--olive);}
   #musicToggle svg{width:14px;height:14px;flex-shrink:0;}
   #musicToggle .mt-label{white-space:nowrap;text-indent:.2em;}
+  /* o iframe fica em tamanho normal (navegador trata melhor a mídia assim),
+     mas a caixa em volta o recorta a 1px e o deixa invisível */
+  #ytHost{position:fixed;left:0;bottom:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1;}
 
   /* ───────── RSVP ───────── */
   #rsvp{padding:64px 0 44px;text-align:center;}
@@ -460,8 +463,9 @@
  </div><!-- /.wrap -->
 </div><!-- /#main -->
 
-<!-- áudio do convite (arquivo hospedado junto, sem depender do YouTube) -->
+<!-- áudio do convite: arquivo próprio e, se ele faltar, vídeo do YouTube -->
 <audio id="audio" preload="auto" loop playsinline></audio>
+<div id="ytHost" aria-hidden="true"><div id="ytPlayer"></div></div>
 
 
 <!-- controle flutuante da música -->
@@ -482,10 +486,14 @@ const CONFIG = {
   dataEvento:'2026-11-28T16:00:00',            // usado na contagem regressiva
   dataTexto: '28 de Novembro de 2026',
 
-  // 🎵 música: arquivo de áudio hospedado junto com o convite.
-  //    Suba o arquivo nesta mesma pasta e escreva o nome dele aqui.
-  //    Deixe vazio ('') para o convite ficar sem música.
-  musica: 'musica.mp3',
+  // 🎵 música — o convite tenta nesta ordem:
+  //    1) 'musica': arquivo de áudio nesta mesma pasta (o mais confiável).
+  //       Enquanto o arquivo não existir, o convite passa para a opção 2.
+  //    2) 'musicaYoutube': link do vídeo, em qualquer formato.
+  //       Só funciona se o dono do vídeo permitir tocar fora do YouTube.
+  //    Deixe os dois vazios ('') para o convite ficar sem música.
+  musica:        'musica.mp3',
+  musicaYoutube: 'https://www.youtube.com/watch?v=E3uVhi7UhwY',
 
   // 📍 local único — cerimônia e recepção
   mapLocal: 'https://www.google.com/maps?q=-22.86905288696289,-48.654335021972656&z=17&hl=pt-BR',
@@ -589,14 +597,22 @@ fotoOpcional('fotoLocal','artLocal');
 })();
 
 
-/* ─── MÚSICA (arquivo próprio) ───
-   Nada de YouTube: o vídeo que os noivos escolheram tem a reprodução
-   bloqueada fora do site, então a música vem de um arquivo hospedado
-   junto com o convite. */
+/* ─── MÚSICA ───
+   Duas fontes, nesta ordem: o arquivo de áudio hospedado junto com o
+   convite e, se ele faltar, o vídeo do YouTube. Se nenhuma tocar, o
+   botão some — o convidado nunca é mandado para fora do convite. */
 const audio=document.getElementById('audio');
 const musicToggle=document.getElementById('musicToggle');
-let comSom=false, temMusica=false;
+let fonte=null, comSom=false, querTocar=false, ytPlayer=null;
 
+/* aceita watch?v=, youtu.be/, /embed/, /shorts/ ou o ID pelado */
+function idDoYouTube(link){
+  const t=String(link||'').trim();
+  if(!t) return '';
+  if(/^[\w-]{11}$/.test(t)) return t;
+  const m=t.match(/(?:v=|youtu\.be\/|\/embed\/|\/shorts\/|\/v\/)([\w-]{11})/);
+  return m?m[1]:'';
+}
 function setMusicIcon(p){
   document.getElementById('iconPlay').style.display=p?'none':'block';
   document.getElementById('iconPause').style.display=p?'block':'none';
@@ -604,50 +620,101 @@ function setMusicIcon(p){
   if(r) r.style.display=p?'inline-flex':'none';
 }
 function semMusica(){
-  temMusica=false; comSom=false;
+  fonte=null; comSom=false;
   musicToggle.style.display='none';
   setMusicIcon(false);
 }
+function mostraTocando(){
+  setMusicIcon(true);
+  if(document.getElementById('main').classList.contains('visible')) musicToggle.style.display='flex';
+}
 
-if(CONFIG.musica){
-  temMusica=true;
-  audio.src=CONFIG.musica;
-  audio.loop=true;
-  audio.volume=.6;
+/* ── 1ª opção: arquivo de áudio na pasta do convite ── */
+(function tentaArquivo(){
+  if(!CONFIG.musica){ tentaYoutube(); return; }
+  audio.loop=true; audio.volume=.6;
   /* autoplay mudo é o único que os navegadores deixam acontecer sozinho:
-     a música já começa a rodar atrás da capa e o toque em "toque para
-     abrir" só tira o mudo, então ela entra na hora. */
+     a música já roda atrás da capa e o toque em "toque para abrir" só
+     tira o mudo, então ela entra na hora */
   audio.muted=true;
-  audio.play().catch(()=>{});
-  /* arquivo inexistente ou formato não suportado: some o botão,
-     em vez de mandar o convidado para fora do convite */
-  audio.addEventListener('error',semMusica);
-  audio.addEventListener('play',()=>{ if(comSom) setMusicIcon(true); });
-  audio.addEventListener('pause',()=>setMusicIcon(false));
-}else{
-  semMusica();
+  audio.addEventListener('canplay',()=>{
+    if(fonte) return;
+    fonte='audio';
+    audio.play().catch(()=>{});
+    if(querTocar) tocar();
+  },{once:true});
+  /* arquivo ausente ou formato não suportado: cai para o YouTube */
+  audio.addEventListener('error',()=>{ if(!fonte) tentaYoutube(); },{once:true});
+  audio.src=CONFIG.musica;
+  audio.load();
+})();
+audio.addEventListener('pause',()=>{ if(fonte==='audio') setMusicIcon(false); });
+
+/* ── 2ª opção: vídeo do YouTube ── */
+function tentaYoutube(){
+  if(fonte) return;
+  const id=idDoYouTube(CONFIG.musicaYoutube);
+  if(!id){ semMusica(); return; }
+  window.onYouTubeIframeAPIReady=function(){
+    ytPlayer=new YT.Player('ytPlayer',{
+      height:'180',width:'320',videoId:id,
+      playerVars:{autoplay:1,mute:1,controls:0,disablekb:1,fs:0,
+                  modestbranding:1,playsinline:1,rel:0,loop:1,playlist:id},
+      events:{
+        onReady:()=>{
+          fonte='yt';
+          try{ ytPlayer.mute(); ytPlayer.playVideo(); }catch(e){}
+          if(querTocar) tocar();
+        },
+        onStateChange:ev=>{
+          if(ev.data===YT.PlayerState.PLAYING && comSom) mostraTocando();
+          if(ev.data===YT.PlayerState.PAUSED) setMusicIcon(false);
+          /* loop:1 já repete; isto é só rede de segurança */
+          if(ev.data===YT.PlayerState.ENDED){ try{ytPlayer.seekTo(0);ytPlayer.playVideo();}catch(e){} }
+        },
+        /* vídeo com reprodução bloqueada fora do YouTube: some o botão.
+           Nada de link para fora — o convite não empurra ninguém embora. */
+        onError:semMusica
+      }
+    });
+  };
+  const sc=document.createElement('script');
+  sc.src='https://www.youtube.com/iframe_api';
+  sc.async=true;
+  sc.onerror=()=>{ if(!fonte) semMusica(); };
+  document.head.appendChild(sc);
 }
 
+/* ── controles ── */
+function tocando(){
+  if(fonte==='audio') return !audio.paused && !audio.muted;
+  if(fonte==='yt'&&ytPlayer&&ytPlayer.getPlayerState) return ytPlayer.getPlayerState()===YT.PlayerState.PLAYING && comSom;
+  return false;
+}
 function tocar(){
-  if(!temMusica) return;
-  audio.muted=false;
-  audio.volume=.6;
-  comSom=true;
-  audio.play().then(()=>{
-    setMusicIcon(true);
-    musicToggle.style.display='flex';
-  }).catch(()=>{ /* navegador ainda não liberou: o próximo toque resolve */ });
+  querTocar=true;
+  if(fonte==='audio'){
+    audio.muted=false; audio.volume=.6; comSom=true;
+    audio.play().then(mostraTocando).catch(()=>{});
+  }else if(fonte==='yt'&&ytPlayer){
+    try{
+      ytPlayer.unMute(); ytPlayer.setVolume(60);
+      comSom=true;              /* antes do play: onStateChange pode responder na hora */
+      ytPlayer.playVideo();
+      mostraTocando();
+    }catch(e){}
+  }
 }
-function pausar(){ comSom=false; audio.pause(); }
-
-musicToggle.addEventListener('click',()=>{
-  if(!temMusica) return;
-  if(audio.paused||audio.muted) tocar(); else pausar();
-});
+function pausar(){
+  comSom=false;
+  if(fonte==='audio') audio.pause();
+  else if(fonte==='yt'&&ytPlayer){ try{ytPlayer.pauseVideo();}catch(e){} }
+}
+musicToggle.addEventListener('click',()=>{ if(fonte) tocando()?pausar():tocar(); });
 /* rede de segurança: se o som não entrar na abertura,
    o primeiro toque em qualquer lugar da página libera */
 ['touchend','click','keydown'].forEach(ev=>
-  document.addEventListener(ev,()=>{ if(temMusica&&(audio.paused||audio.muted)) tocar(); },{once:true,passive:true})
+  document.addEventListener(ev,()=>{ if(fonte&&!tocando()) tocar(); },{once:true,passive:true})
 );
 
 /* ─── SPLASH ─── */
@@ -657,7 +724,7 @@ document.getElementById('splash').addEventListener('click',function(){
   setTimeout(()=>{
     this.style.display='none';
     document.getElementById('main').classList.add('visible');
-    if(temMusica) musicToggle.style.display='flex';
+    if(fonte) musicToggle.style.display='flex';
     initReveal(); startCountdown();
     window.scrollTo(0,0);
   },950);
