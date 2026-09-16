@@ -1,75 +1,58 @@
 # Convite de casamento — Maria & Felipe
 
-Convite digital de página única (um só arquivo: `index.html`).
+Convite digital de página única. Tudo vive no `index.html` — sem servidor, sem
+banco de dados, sem dependência de build.
 
 **28 de novembro de 2026 · sábado · 16h**
 Armazém Secos e Molhados — Bairro Monte Alegre, Pratânia / São Manuel — SP
 
 ---
 
-## ✅ O que já está pronto
+## O que o convite tem
 
-- Abertura (splash) com monograma **M & F** — laurel de oliveira desenhado em SVG,
+- Abertura com o monograma **M & F** — laurel de oliveira desenhado em SVG,
   feito sob medida para o convite
 - Paleta **branco + verde oliva**
+- Foto do casal no topo
 - Versículo de **Mateus 19:6**
 - Cerimônia e recepção no mesmo local, com botão "Ver no mapa"
 - Contagem regressiva até o grande dia
-- Música ambiente: vídeo do YouTube tocando ao abrir o convite, com botão de pausar
-- Dress code com as cores reservadas
-- **Manual dos convidados** (9 tópicos, em acordeão)
-- **Lista de presentes** com 16 cotas e pagamento por Pix "copia e cola"
-- Confirmação de presença pelo WhatsApp **(14) 99754-4105**
+- Música ambiente (YouTube), que começa quando o convidado toca para abrir,
+  com botão flutuante para pausar
+- Dress code: traje social, com as cores reservadas
+- **Manual dos convidados** — 10 tópicos em acordeão
+- Confirmação de presença pelo WhatsApp **(14) 99754-4105**, sem prazo
 
-## ⚠️ O que falta preencher
+## Como editar
 
-### 1. A chave Pix (obrigatório para a lista de presentes)
-
-Abra o `index.html`, procure o bloco `const CONFIG` (perto do começo do `<script>`)
-e preencha:
-
-```js
-pixChave:   '',              // ← CPF, telefone, e-mail ou chave aleatória
-pixTitular: 'Maria e Felipe',
-```
-
-Enquanto a chave estiver vazia, o convite **não quebra**: ao tocar em
-"Presentear", o convidado vê um aviso de que a chave está sendo cadastrada e um
-botão para falar com os noivos pelo WhatsApp.
-
-Com a chave preenchida, o convite gera sozinho o código Pix de cada cota, já com
-o valor certo — o convidado só cola no app do banco.
-
-### 2. As fotos
-
-Veja as instruções em [`fotos/LEIA-ME.md`](fotos/LEIA-ME.md).
-
----
-
-## ✏️ Como editar
-
-Tudo que muda com frequência está reunido no começo do `<script>`, em três blocos:
+O que muda com frequência está reunido no começo do `<script>`, em dois blocos:
 
 | Bloco | O que controla |
 |---|---|
-| `CONFIG` | nomes, data, horário, cidade, link do mapa, WhatsApp, música, Pix, versículo |
-| `MANUAL` | os tópicos do Manual dos convidados |
-| `PRESENTES` | as cotas da lista de presentes (nome, descrição, valor, ícone) |
+| `CONFIG` | nomes, data, horário, cidade, link do mapa, WhatsApp, música, versículo |
+| `MANUAL` | os tópicos do Manual dos convidados (título, texto e ícone) |
 
-Para trocar um valor de presente, basta mudar o número em `valor:` — o código Pix
-é gerado a partir dele automaticamente.
+Para acrescentar um tópico ao manual, copie uma linha do `MANUAL` e troque o
+texto. Os ícones disponíveis estão logo abaixo, no objeto `ICONES`:
+`chat`, `ring`, `dress`, `cheers`, `cake`, `vase`, `users`, `clock`, `camera`, `heart`.
 
-## 🌐 Como publicar
+## Fotos
 
-O convite é um arquivo só, sem servidor e sem banco de dados. Pode ser publicado
-no **GitHub Pages** (Settings → Pages → branch `main`, pasta `/root`), Netlify,
-Vercel ou qualquer hospedagem simples.
+Ficam na pasta [`fotos/`](fotos/LEIA-ME.md). A foto do casal já está lá.
+A do local (`fotos/local.jpg`) é opcional — sem ela, aquele bloco simplesmente
+não aparece.
 
-## 📱 Detalhes técnicos
+## Como publicar
 
-- Feito para celular (o convite é enviado por WhatsApp), mas se adapta a telas grandes
+Sendo um arquivo só, dá para publicar no **GitHub Pages**
+(Settings → Pages → branch `main`, pasta `/root`), Netlify, Vercel ou qualquer
+hospedagem estática. Depois é só mandar o link no WhatsApp.
+
+## Detalhes técnicos
+
+- Pensado para celular (o convite circula por WhatsApp), mas se adapta a telas grandes
 - Fontes: Bodoni Moda + Jost (Google Fonts)
-- Música pelo player do YouTube, iniciada pelo toque do convidado em "toque para abrir"
-  (assim o navegador não bloqueia o áudio)
-- Código Pix no padrão BR Code do Banco Central, gerado no próprio navegador
+- A música é iniciada pelo toque do convidado em "toque para abrir", para o
+  navegador não bloquear o áudio; se o YouTube não carregar, o botão de música
+  some sozinho em vez de ficar sem função
 - Respeita `prefers-reduced-motion` para quem prefere menos animação

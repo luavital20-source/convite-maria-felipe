@@ -105,7 +105,7 @@
     -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 50%,rgba(0,0,0,.55) 74%,rgba(0,0,0,0) 96%);
             mask-image:linear-gradient(to bottom,#000 0%,#000 50%,rgba(0,0,0,.55) 74%,rgba(0,0,0,0) 96%);
   }
-  .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 32%;filter:saturate(.92) contrast(.98);}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 14%;filter:saturate(.92) contrast(.98) sepia(.07);}
   .hero-photo::before{
     content:'';position:absolute;inset:0;z-index:1;
     background:linear-gradient(180deg, rgba(85,99,47,.10) 0%, rgba(85,99,47,0) 26%, rgba(138,154,91,.06) 100%);
@@ -210,89 +210,6 @@
   .man-body{padding:0 18px 18px 52px;font-size:13px;line-height:1.8;color:var(--ink-soft);}
   .man-body b{font-weight:400;color:var(--ink);}
 
-  /* ───────── PRESENTES ───────── */
-  #gifts{padding:58px 0;text-align:center;}
-  .gift-note{font-size:13.5px;line-height:1.85;color:var(--ink-soft);max-width:410px;margin:26px auto 0;}
-  .gift-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:38px;text-align:left;}
-  .gift-card{
-    display:flex;flex-direction:column;overflow:hidden;border-radius:16px;
-    border:1px solid var(--line);background:rgba(255,255,255,.6);
-    box-shadow:0 6px 18px rgba(85,99,47,.05);transition:transform .4s,box-shadow .4s;
-  }
-  .gift-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(85,99,47,.12);}
-  .gift-photo{position:relative;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(150deg,var(--sage),var(--paper-2));
-    display:flex;align-items:center;justify-content:center;}
-  .gift-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.6,.2,1);}
-  .gift-card:hover .gift-photo img{transform:scale(1.06);}
-  .gift-photo .gi{width:42px;height:42px;color:var(--olive-deep);opacity:.85;}
-  .gift-photo .gi svg{width:100%;height:100%;}
-  .gift-num{
-    position:absolute;top:9px;left:9px;z-index:2;
-    display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 6px;
-    font-family:'Bodoni Moda',serif;font-size:12px;color:var(--paper);
-    background:rgba(85,99,47,.85);border-radius:20px;letter-spacing:.02em;
-  }
-  .gift-body{display:flex;flex-direction:column;flex:1;padding:14px 14px 16px;}
-  .gift-name{font-family:'Bodoni Moda',serif;font-size:15.5px;line-height:1.25;color:var(--ink);}
-  .gift-sub{font-size:11.5px;line-height:1.55;color:var(--ink-soft);margin-top:6px;flex:1;}
-  .gift-val{font-family:'Bodoni Moda',serif;font-style:italic;font-size:17px;color:var(--olive-deep);margin-top:12px;}
-  .gift-btns{display:flex;gap:8px;margin-top:14px;}
-  .gift-btns button{
-    flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
-    font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;letter-spacing:.16em;text-transform:uppercase;text-indent:.16em;
-    padding:10px 6px;border-radius:30px;transition:.3s;cursor:pointer;white-space:nowrap;
-    background:var(--olive-deep);color:var(--paper);border:1px solid var(--olive-deep);
-  }
-  .gift-btns button:hover{background:transparent;color:var(--olive-deep);}
-  .gift-btns svg{width:12px;height:12px;flex-shrink:0;}
-
-  /* ── Modal do Pix ── */
-  .pixm{position:fixed;inset:0;z-index:1100;display:flex;align-items:center;justify-content:center;padding:24px;}
-  .pixm[hidden]{display:none;}
-  .pixm-bg{position:absolute;inset:0;background:rgba(47,51,42,.55);backdrop-filter:blur(3px);animation:pixFade .3s both;}
-  .pixm-card{
-    position:relative;width:100%;max-width:360px;max-height:90vh;overflow-y:auto;
-    background:var(--paper);border:1px solid var(--line);border-radius:20px;
-    padding:30px 26px 26px;text-align:center;
-    box-shadow:0 24px 60px rgba(47,51,42,.28);animation:pixUp .38s cubic-bezier(.2,.6,.2,1) both;
-  }
-  .pixm-x{
-    position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;
-    border:1px solid var(--line);background:transparent;color:var(--ink-soft);
-    font-size:17px;line-height:1;cursor:pointer;transition:.3s;
-  }
-  .pixm-x:hover{background:var(--olive-deep);color:var(--paper);border-color:var(--olive-deep);}
-  .pixm-eyebrow{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--olive-deep);text-indent:.3em;}
-  .pixm-nome{font-family:'Bodoni Moda',serif;font-size:19px;color:var(--ink);margin-top:10px;line-height:1.25;}
-  .pixm-valor{font-family:'Bodoni Moda',serif;font-style:italic;font-size:30px;color:var(--olive);margin-top:6px;}
-  .pixm-code{
-    margin-top:20px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;
-    background:rgba(255,255,255,.7);font-family:'Jost',sans-serif;font-size:10px;
-    color:var(--ink-soft);word-break:break-all;line-height:1.6;max-height:88px;overflow-y:auto;text-align:left;
-  }
-  .pixm-copiar{
-    display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:16px;
-    font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;text-indent:.22em;
-    color:var(--paper);background:var(--olive-deep);border:1px solid var(--olive-deep);
-    border-radius:34px;padding:14px 18px;cursor:pointer;transition:.3s;
-  }
-  .pixm-copiar:hover{background:transparent;color:var(--olive-deep);}
-  .pixm-copiar.copiado{background:var(--olive);border-color:var(--olive);color:#fff;}
-  .pixm-copiar svg{width:14px;height:14px;flex-shrink:0;}
-  .pixm-hint{font-size:11.5px;line-height:1.7;color:var(--ink-soft);margin-top:14px;}
-  .pixm-hint strong{color:var(--ink);font-weight:400;}
-  .pixm-chave{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:11px;line-height:1.75;color:var(--ink-soft);}
-  .pixm-chave b{display:block;font-family:'Jost',sans-serif;font-weight:400;font-size:14px;color:var(--ink);letter-spacing:.06em;margin-top:3px;}
-  .pixm-wa{
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;
-    font-size:10px;letter-spacing:.2em;text-transform:uppercase;text-indent:.2em;text-decoration:none;
-    color:var(--olive-deep);border:1px solid var(--olive-soft);border-radius:34px;padding:12px 16px;transition:.3s;
-  }
-  .pixm-wa:hover{background:var(--olive-deep);color:var(--paper);border-color:var(--olive-deep);}
-  .pixm-wa svg{width:13px;height:13px;flex-shrink:0;}
-  @keyframes pixFade{from{opacity:0}to{opacity:1}}
-  @keyframes pixUp{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
-  @media(max-width:360px){.gift-grid{gap:12px;}}
 
   /* ───────── MÚSICA ───────── */
   #music{padding:26px 0 8px;text-align:center;}
@@ -316,7 +233,6 @@
   /* ───────── RSVP ───────── */
   #rsvp{padding:64px 0 44px;text-align:center;}
   .rsvp-note{font-size:13.5px;line-height:1.85;color:var(--ink-soft);max-width:410px;margin:26px auto 0;}
-  .rsvp-prazo{margin-top:18px;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--olive-deep);text-indent:.26em;}
   .btn-fill{
     display:inline-flex;align-items:center;gap:10px;margin-top:26px;
     font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper);
@@ -344,7 +260,16 @@
   @keyframes eq{0%,100%{height:4px}50%{height:14px}}
 
   @media(max-width:380px){.inner{padding:0 24px}.qf .v{font-size:17px}.palette{gap:18px}}
-  @media(min-width:760px){.hero-photo{height:78vh;min-height:540px}.hero-photo img{object-position:50% 38%;}}
+  @media(min-width:760px){
+    /* foto vertical: limita a largura, senão o corte come as cabeças */
+    .hero-photo{width:min(100vw,620px);left:auto;right:auto;margin:0 auto;height:72vh;min-height:520px;max-height:700px;}
+    .hero-photo img{object-position:50% 12%;}
+    /* sem o sangramento, as laterais ficariam com corte seco sobre o papel */
+    .hero-photo::after{
+      content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+      background:linear-gradient(90deg,var(--paper),rgba(251,250,245,0) 9%,rgba(251,250,245,0) 91%,var(--paper));
+    }
+  }
   @media(prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none}
     .splash-mono,.splash-names,.splash-date{opacity:1;animation:none}
@@ -497,11 +422,10 @@
       <h2 class="sec-title reveal">Dress <span class="it">code</span></h2>
       <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
       <svg class="dress-icon reveal d1" viewBox="0 0 48 48" fill="none"><path d="M24 12a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.4"/><path d="M19 14l5 6 5-6M24 20v8M16 42c0-8 3-12 8-14 5 2 8 6 8 14z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-      <p class="dress-main reveal d1">Esporte fino</p>
+      <p class="dress-main reveal d1">Traje social</p>
       <p class="dress-note reveal d2">
-        Venha bonito e confortável — a celebração é ao ar livre, em área rural.
-        Pedimos apenas que evitem o <strong>branco</strong> e o <strong>verde oliva</strong>,
-        cores reservadas aos noivos e ao cortejo.
+        Pedimos que evitem o <strong>branco</strong> e o <strong>verde oliva</strong>:
+        são as cores reservadas aos noivos e ao cortejo.
       </p>
       <div class="palette reveal d2">
         <div class="pal"><i style="background:#FFFFFF"></i><span>Branco</span></div>
@@ -522,28 +446,13 @@
     </div>
   </section>
 
-  <!-- PRESENTES -->
-  <section id="gifts">
-    <div class="inner">
-      <p class="sec-label reveal">presentes</p>
-      <h2 class="sec-title reveal">Lista de <span class="it">presentes</span></h2>
-      <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
-      <p class="gift-note reveal d1">
-        Nossa maior alegria é ter você conosco nesse dia. Mas, se quiser nos presentear,
-        escolha uma cota abaixo e contribua pelo Pix — cada uma ajuda a começar a nossa história.
-      </p>
-      <div class="gift-grid" id="giftGrid"></div>
-    </div>
-  </section>
 
-  <!-- RSVP -->
   <section id="rsvp">
     <div class="inner">
       <p class="sec-label reveal">confirmação de presença</p>
       <h2 class="sec-title reveal">Você <span class="it">vem?</span></h2>
       <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
       <p class="rsvp-note reveal d1">Sua presença fará deste dia um momento ainda mais especial. Confirme pelo WhatsApp, com um toque.</p>
-      <p class="rsvp-prazo reveal d1" id="rsvpPrazo"></p>
       <a class="btn-fill reveal d2" id="confirmBtn" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12 2a10 10 0 00-8.6 15.06L2 22l5.06-1.33A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.18-1.15l-.3-.18-3.1.81.83-3.02-.2-.31A8.2 8.2 0 1112 20.2z"/></svg>
         Confirmar no WhatsApp
@@ -565,31 +474,6 @@
 <!-- player do YouTube (oculto) -->
 <div id="ytHost"><div id="ytPlayer"></div></div>
 
-<!-- modal do Pix -->
-<div class="pixm" id="pixModal" hidden role="dialog" aria-modal="true" aria-labelledby="pixmNome">
-  <div class="pixm-bg" data-fechar></div>
-  <div class="pixm-card">
-    <button class="pixm-x" type="button" data-fechar aria-label="Fechar">&times;</button>
-    <p class="pixm-eyebrow">presente via pix</p>
-    <p class="pixm-nome" id="pixmNome"></p>
-    <p class="pixm-valor" id="pixmValor"></p>
-    <div class="pixm-code" id="pixmCode"></div>
-    <button class="pixm-copiar" id="pixmCopiar" type="button">
-      <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 15H4.5A1.5 1.5 0 013 13.5v-9A1.5 1.5 0 014.5 3h9A1.5 1.5 0 0115 4.5V5" stroke="currentColor" stroke-width="1.4"/></svg>
-      <span>Copiar código Pix</span>
-    </button>
-    <p class="pixm-hint" id="pixmHint">Cole no app do seu banco em <strong>Pix copia e cola</strong>. O valor já vai preenchido.</p>
-    <div class="pixm-chave" id="pixmChaveBox">
-      Ou use a chave Pix
-      <b id="pixmChave"></b>
-      <span id="pixmTitular"></span>
-    </div>
-    <a class="pixm-wa" id="pixmWa" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15.06L2 22l5.06-1.33A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.18-1.15l-.3-.18-3.1.81.83-3.02-.2-.31A8.2 8.2 0 1112 20.2z"/></svg>
-      Avisar os noivos
-    </a>
-  </div>
-</div>
 
 <!-- controle flutuante da música -->
 <div id="musicToggle" title="Nossa música">
@@ -608,7 +492,6 @@ const CONFIG = {
 
   dataEvento:'2026-11-28T16:00:00',            // usado na contagem regressiva
   dataTexto: '28 de Novembro de 2026',
-  prazoRSVP: 'Confirme até 28 de outubro de 2026',
 
   // 🎵 música: vídeo do YouTube (https://youtu.be/VUf32ZK-Jd0)
   youtubeId: 'VUf32ZK-Jd0',
@@ -619,13 +502,6 @@ const CONFIG = {
   // 💚 confirmação de presença — WhatsApp (14) 99754-4105
   whatsapp: '5514997544105',
 
-  // ══ Pix — usado em todas as cotas de presente ══
-  // ⚠️ PREENCHA com a chave Pix dos noivos (CPF, telefone, e-mail ou aleatória).
-  //    Enquanto estiver vazio, o modal avisa o convidado e oferece o WhatsApp.
-  pixChave:   '',
-  pixTitular: 'Maria e Felipe',
-  pixCidade:  'PRATANIA',
-
   versiculo:    'Assim, eles já não são dois, mas sim uma só carne. Portanto, o que Deus uniu, ninguém separe.',
   versiculoRef: 'Mateus 19:6',
 };
@@ -634,47 +510,26 @@ const CONFIG = {
    📖  MANUAL DOS CONVIDADOS
    ════════════════════════════════════════════════════════════ */
 const MANUAL = [
-  { ico:'clock', t:'Chegue com 30 minutos de antecedência',
-    d:'A cerimônia começa pontualmente às <b>16h</b>. Chegando às 15h30 você acomoda-se com calma e não perde a entrada da noiva. Se chegar depois do início, aguarde a orientação dos recepcionistas para entrar.' },
-  { ico:'dress', t:'Traje: esporte fino',
-    d:'Nada de gravata obrigatória, mas capriche. Como a celebração é em área rural e ao ar livre, prefira <b>sapatos confortáveis</b> — saltos muito finos podem afundar na grama.' },
-  { ico:'palette', t:'Cores reservadas',
-    d:'Por favor, evite o <b>branco</b> (é da noiva) e o <b>verde oliva</b> (é a cor do cortejo). Fora isso, use a cor que te deixa feliz.' },
-  { ico:'pin', t:'Como chegar e estacionar',
-    d:'<b>Armazém Secos e Molhados</b> — Bairro Monte Alegre, entre Pratânia e São Manuel/SP. Há estacionamento no local. Salve a rota no mapa <b>antes de sair</b>: o sinal de celular na região pode oscilar.' },
-  { ico:'camera', t:'Cerimônia sem celular',
-    d:'Temos fotógrafos cuidando de tudo. Durante a cerimônia, pedimos que guarde o celular e viva o momento conosco — na festa, fotografe à vontade e marque os noivos.' },
-  { ico:'child', t:'Crianças',
-    d:'Crianças são muito bem-vindas, acompanhadas dos pais ou responsáveis, que ficam atentos a elas durante a celebração.' },
-  { ico:'ring', t:'Cerimônia e festa no mesmo lugar',
-    d:'Você não precisa se deslocar. Logo após a celebração começam as fotos, o jantar e a festa — tudo no mesmo espaço.' },
-  { ico:'gift', t:'Presentes',
-    d:'Sua presença já é o maior presente. Quem quiser presentear pode escolher uma cota na <b>Lista de presentes</b> deste convite e contribuir pelo Pix.' },
-  { ico:'chat', t:'Confirmação de presença',
-    d:'Confirme pelo WhatsApp, informando <b>seu nome e o número de pessoas</b>. Isso nos ajuda a organizar mesas e jantar. Se o plano mudar, avise — sem constrangimento algum.' },
-];
-
-/* ════════════════════════════════════════════════════════════
-   🎁  PRESENTES — cotas da lista
-        valor → número em reais   |   foto → opcional (fotos/…)
-   ════════════════════════════════════════════════════════════ */
-const PRESENTES = [
-  { id:1,  ico:'plane',  nome:'Lua de mel dos sonhos',      sub:'Ajude a viagem mais esperada do casal.',        valor:500 },
-  { id:2,  ico:'heart',  nome:'Jantar do primeiro mês',     sub:'Uma mesa pra dois, com vela e tudo.',           valor:180 },
-  { id:3,  ico:'cup',    nome:'Café da manhã na cama',      sub:'Domingo preguiçoso patrocinado por você.',      valor:120 },
-  { id:4,  ico:'pan',    nome:'Panela nova pra casa nova',  sub:'Porque alguém vai ter que cozinhar.',           valor:200 },
-  { id:5,  ico:'bed',    nome:'Jogo de cama do casal',      sub:'Macio, novo e sem estampa de solteiro.',        valor:250 },
-  { id:6,  ico:'wash',   nome:'Cota da máquina de lavar',   sub:'Um pedacinho do eletrodoméstico dos sonhos.',   valor:300 },
-  { id:7,  ico:'towel',  nome:'Jogo de toalhas',            sub:'Pra ninguém mais roubar a toalha do outro.',    valor:110 },
-  { id:8,  ico:'fire',   nome:'Churrasco de domingo',       sub:'O noivo garante que você será convidado.',      valor:150 },
-  { id:9,  ico:'plant',  nome:'Plantinhas pra casa',        sub:'Verde oliva também dentro de casa.',            valor:80  },
-  { id:10, ico:'film',   nome:'Sessão de cinema a dois',    sub:'Ingressos, pipoca e briga pelo refrigerante.',  valor:90  },
-  { id:11, ico:'tv',     nome:'Streaming por um ano',       sub:'Para o programa oficial de sexta à noite.',     valor:130 },
-  { id:12, ico:'broom',  nome:'Faxina pós-lua de mel',      sub:'Pros noivos só descansarem ao voltar.',         valor:160 },
-  { id:13, ico:'paw',    nome:'Pet da família',             sub:'Ajuda pro futuro integrante de quatro patas.',  valor:200 },
-  { id:14, ico:'spa',    nome:'Dia de spa do casal',        sub:'Relaxar depois de tanta correria.',             valor:280 },
-  { id:15, ico:'camera2',nome:'Ensaio de 1 ano de casados', sub:'Pra registrar que deu tudo certo.',             valor:400 },
-  { id:16, ico:'coin',   nome:'Cota “só pra dizer que dei”',sub:'Carinho não se mede em reais.',                 valor:50  },
+  { ico:'chat', t:'Confirme sua presença',
+    d:'Avise pelo WhatsApp se você vem, com <b>seu nome e quantas pessoas</b>. É assim que organizamos as mesas e o jantar. Se o plano mudar depois, avise também — sem constrangimento nenhum.' },
+  { ico:'ring', t:'Participe da cerimônia',
+    d:'A cerimônia é o coração do nosso dia. Fique na celebração do começo ao fim, cante, ore e emocione-se conosco — é o momento mais importante para nós.' },
+  { ico:'dress', t:'Branco é a cor da noiva',
+    d:'Só a noiva veste branco nesse dia. Evite também o <b>verde oliva</b>, reservado ao cortejo. Fora essas duas, use a cor que te deixa feliz.' },
+  { ico:'cheers', t:'Aproveite bastante',
+    d:'Coma, brinde, dance e fique à vontade. A festa é nossa, mas ela foi pensada para você se divertir com a gente.' },
+  { ico:'cake', t:'Aguarde a liberação da mesa de doces',
+    d:'A mesa de doces é fotografada antes de ser servida. Espere o aviso dos noivos ou da equipe — depois disso, pode se servir sem cerimônia.' },
+  { ico:'vase', t:'Não leve a decoração para casa',
+    d:'Arranjos, velas, vasos e peças da decoração têm destino combinado com os fornecedores. Por favor, deixe tudo no lugar ao ir embora.' },
+  { ico:'users', t:'Convidado não convida',
+    d:'O convite é pessoal e vale para as pessoas nomeadas nele. O espaço e o jantar são contados por pessoa, então não é possível levar acompanhantes que não foram convidados.' },
+  { ico:'clock', t:'Não atrase, seja pontual',
+    d:'A cerimônia começa pontualmente às <b>16h</b>. Chegue com <b>30 minutos de antecedência</b> para se acomodar com calma e não perder a entrada da noiva.' },
+  { ico:'camera', t:'Não atrapalhe os fotógrafos',
+    d:'Temos profissionais registrando cada momento. Durante a cerimônia, guarde o celular e não entre no corredor: assim as fotos ficam lindas para todo mundo.' },
+  { ico:'heart', t:'Não saia sem se despedir dos noivos',
+    d:'Queremos abraçar você antes de você ir. Nada de sair à francesa — venha nos dar tchau!' },
 ];
 
 /* ════════════════════════════════════════════════════════════
@@ -684,33 +539,18 @@ const PRESENTES = [
 /* ─── Ícones ─── */
 const S=(d,extra='')=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">'+d+extra+'</svg>';
 const ICONES={
-  clock:  S('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>'),
-  dress:  S('<path d="M9 3l3 4 3-4M9 3h6M12 7v3M8 21c0-5 1.6-8 4-9 2.4 1 4 4 4 9z"/>'),
-  palette:S('<path d="M12 3a9 9 0 000 18c1.1 0 1.8-.8 1.8-1.7 0-.9-.7-1.5-.7-2.3 0-.8.7-1.5 1.6-1.5H16a5 5 0 005-5c0-4.1-4-7.5-9-7.5z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="11" r="1"/>'),
-  pin:    S('<path d="M12 2C8.3 2 5.5 4.8 5.5 8.5 5.5 13.4 12 22 12 22s6.5-8.6 6.5-13.5C18.5 4.8 15.7 2 12 2z"/><circle cx="12" cy="8.5" r="2.4"/>'),
-  camera: S('<path d="M3 8.5A1.5 1.5 0 014.5 7h2.2l1.2-2h8.2l1.2 2h2.2A1.5 1.5 0 0121 8.5v9A1.5 1.5 0 0119.5 19h-15A1.5 1.5 0 013 17.5z"/><circle cx="12" cy="13" r="3.4"/>'),
-  child:  S('<circle cx="12" cy="6" r="2.6"/><path d="M12 8.6V15M8 11l4-1.4 4 1.4M9.5 21L12 15l2.5 6"/>'),
-  ring:   S('<circle cx="12" cy="15" r="5.2"/><path d="M12 9.8L8.6 6.6 10.2 4h3.6l1.6 2.6z"/><path d="M8.6 6.6h6.8M12 4v2.6"/>'),
-  gift:   S('<path d="M3 10h18v3H3zM4.5 13H19.5v7a1 1 0 01-1 1h-13a1 1 0 01-1-1zM12 10v11"/><path d="M12 10S10.5 4 8 5.2 10.2 10 12 10zM12 10s1.5-6 4-4.8S13.8 10 12 10z"/>'),
   chat:   S('<path d="M21 12a8 8 0 01-11.6 7.1L4 21l1.9-5A8 8 0 1121 12z"/>'),
-  plane:  S('<path d="M10.5 13.5L3 11l18-7-7 18-2.5-7.5z"/><path d="M10.5 13.5L21 4"/>'),
+  ring:   S('<circle cx="12" cy="15" r="5.2"/><path d="M12 9.8L8.6 6.6 10.2 4h3.6l1.6 2.6z"/><path d="M8.6 6.6h6.8M12 4v2.6"/>'),
+  dress:  S('<path d="M9 3l3 4 3-4M9 3h6M12 7v3M8 21c0-5 1.6-8 4-9 2.4 1 4 4 4 9z"/>'),
+  cheers: S('<path d="M3.6 3h6l-.9 7.1a2.1 2.1 0 01-4.2 0zM14.4 3h6l-.9 7.1a2.1 2.1 0 01-4.2 0z"/><path d="M6.6 12.2V20M17.4 12.2V20M4.2 20.5h4.8M15 20.5h4.8"/>'),
+  cake:   S('<path d="M4.2 20.5h15.6V14a2 2 0 00-2-2H6.2a2 2 0 00-2 2z"/><path d="M4.2 16.2c1.55 1.25 3.1 1.25 4.65 0s3.1-1.25 4.65 0 3.1 1.25 4.65 0"/><path d="M12 12V9M9 12v-2.2M15 12V9.8M12 7.4l.9-1.4-.9-1.4-.9 1.4z"/>'),
+  vase:   S('<path d="M7.6 10h8.8l-1 9.4a1.6 1.6 0 01-1.6 1.4h-3.6a1.6 1.6 0 01-1.6-1.4z"/><path d="M12 10V6.4"/><path d="M12 6.4c2.1 0 3.7-1.5 3.7-3.4-2.1 0-3.7 1.5-3.7 3.4zM12 6.4c-2.1 0-3.7-1.5-3.7-3.4 2.1 0 3.7 1.5 3.7 3.4z"/>'),
+  users:  S('<circle cx="9.2" cy="8" r="3.2"/><path d="M3 20.4c0-3.4 2.8-6.2 6.2-6.2s6.2 2.8 6.2 6.2"/><path d="M16.4 5.2a3.2 3.2 0 010 5.8M17.8 14.6c1.9.9 3.2 2.8 3.2 5"/>'),
+  clock:  S('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>'),
+  camera: S('<path d="M3 8.5A1.5 1.5 0 014.5 7h2.2l1.2-2h8.2l1.2 2h2.2A1.5 1.5 0 0121 8.5v9A1.5 1.5 0 0119.5 19h-15A1.5 1.5 0 013 17.5z"/><circle cx="12" cy="13" r="3.4"/>'),
   heart:  S('<path d="M12 20s-7-4.4-7-9.2A4 4 0 0112 8.4 4 4 0 0119 10.8c0 4.8-7 9.2-7 9.2z"/>'),
-  cup:    S('<path d="M4 8h13v6a5 5 0 01-5 5H9a5 5 0 01-5-5z"/><path d="M17 9.5h1.6A2.4 2.4 0 0121 12a2.4 2.4 0 01-2.4 2.4H17M6 5V3M10 5V3M14 5V3"/>'),
-  pan:    S('<path d="M6 3v5a2 2 0 004 0V3M8 10v11M17.2 3c1.5 1.9 1.5 5.6 0 7.5V21"/>'),
-  bed:    S('<path d="M3 18V7M3 12h18v6M3 18h18M7 12V9.5h4.5V12"/>'),
-  wash:   S('<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="14" r="4"/><circle cx="8" cy="6.5" r=".8" fill="currentColor"/>'),
-  towel:  S('<path d="M6 4h12v16H6z"/><path d="M6 8h12M9 4v16"/>'),
-  fire:   S('<path d="M12 21c3.3 0 6-2.5 6-5.7 0-4.2-4.5-5.8-3.6-10.3C11.6 6 8.4 8.6 8.4 12c-1-.6-1.5-1.8-1.5-1.8C6.3 11.3 6 12.9 6 14.3 6 18 8.7 21 12 21z"/>'),
-  plant:  S('<path d="M12 21v-8"/><path d="M12 13c0-3.3 2.4-6 5.5-6 0 3.3-2.4 6-5.5 6zM12 15c0-2.8-2-5-4.8-5 0 2.8 2 5 4.8 5z"/><path d="M8.5 21h7"/>'),
-  film:   S('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 12h18"/>'),
-  tv:     S('<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 21h8M10 11l4 1.5-4 1.5z"/>'),
-  broom:  S('<path d="M15 4l-7 7M5 21c-1-3 1-6 4-7l3 3c-1 3-4 5-7 4z"/><path d="M12.5 10.5l4.5 4.5"/><path d="M16 9l4 4"/>'),
-  paw:    S('<circle cx="8" cy="8" r="1.9"/><circle cx="16" cy="8" r="1.9"/><circle cx="5.5" cy="13" r="1.7"/><circle cx="18.5" cy="13" r="1.7"/><path d="M12 12c2.6 0 4.5 2.1 4.5 4.3 0 1.7-1.3 2.9-3 2.9-.9 0-1.1-.4-1.5-.4s-.6.4-1.5.4c-1.7 0-3-1.2-3-2.9C7.5 14.1 9.4 12 12 12z"/>'),
-  spa:    S('<path d="M12 21c0-4 2.5-7 6.5-8-1 4-3 6.5-6.5 8zM12 21c0-4-2.5-7-6.5-8 1 4 3 6.5 6.5 8z"/><path d="M12 13c1.8-1.5 2.6-3.3 2.6-5.2C14.6 5.6 13.6 4 12 3c-1.6 1-2.6 2.6-2.6 4.8 0 1.9.8 3.7 2.6 5.2z"/>'),
-  camera2:S('<rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.5 7l1.2-2h4.6l1.2 2"/>'),
-  coin:   S('<circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.2c-.6-.7-1.5-1-2.5-1-1.5 0-2.5.8-2.5 1.9 0 2.6 5 1.3 5 3.9 0 1.1-1 1.9-2.5 1.9-1.1 0-2-.4-2.6-1.1M12 6.6v1.6M12 15.8v1.6"/>'),
 };
-const ico=n=>ICONES[n]||ICONES.gift;
+const ico=n=>ICONES[n]||ICONES.heart;
 
 /* ─── Textos do CONFIG ─── */
 function txt(id,v){const e=document.getElementById(id);if(e)e.innerHTML=v;}
@@ -726,7 +566,6 @@ txt('heroSub',CONFIG.cidade);
 txt('footerDate',CONFIG.dataTexto);
 txt('verseText','“'+CONFIG.versiculo+'”');
 txt('verseRef',CONFIG.versiculoRef);
-txt('rsvpPrazo',CONFIG.prazoRSVP||'');
 document.getElementById('mapLocal').href=CONFIG.mapLocal;
 document.title=CONFIG.noivos+' — Casamento';
 
@@ -758,141 +597,6 @@ fotoOpcional('fotoLocal','artLocal');
     </details>`).join('');
 })();
 
-/* ═══════════ PIX — código "copia e cola" (BR Code / Banco Central) ═══════════ */
-function pixCRC16(s){
-  let c=0xFFFF;
-  for(let i=0;i<s.length;i++){
-    c^=s.charCodeAt(i)<<8;
-    for(let j=0;j<8;j++) c=(c&0x8000)?((c<<1)^0x1021)&0xFFFF:(c<<1)&0xFFFF;
-  }
-  return c.toString(16).toUpperCase().padStart(4,'0');
-}
-function pixCode(valor){
-  const tlv=(id,v)=>id+String(v.length).padStart(2,'0')+v;
-  const ascii=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\x20-\x7E]/g,'').toUpperCase();
-  let p='';
-  p+=tlv('00','01');
-  p+=tlv('26',tlv('00','br.gov.bcb.pix')+tlv('01',CONFIG.pixChave));
-  p+=tlv('52','0000');
-  p+=tlv('53','986');
-  if(valor) p+=tlv('54',Number(valor).toFixed(2));
-  p+=tlv('58','BR');
-  p+=tlv('59',ascii(CONFIG.pixTitular).slice(0,25));
-  p+=tlv('60',ascii(CONFIG.pixCidade).slice(0,15));
-  p+=tlv('62',tlv('05','***'));
-  p+='6304';
-  return p+pixCRC16(p);
-}
-function formatarChave(c){
-  const so=c.replace(/\D/g,'');
-  if(/^\d{11}$/.test(c)) return c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4');
-  if(so.length===11 && /^\+?\d+$/.test(c)) return c;
-  return c;
-}
-const temPix=()=>!!(CONFIG.pixChave && CONFIG.pixChave.trim());
-
-/* ─── Modal do Pix ─── */
-const pixModal=document.getElementById('pixModal');
-const brl=v=>Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:0,maximumFractionDigits:0});
-function abrirPix(id){
-  const g=PRESENTES.find(p=>p.id===id);
-  if(!g||!pixModal) return;
-  document.getElementById('pixmNome').textContent=g.nome;
-  document.getElementById('pixmValor').textContent=brl(g.valor);
-  document.getElementById('pixmWa').href=waLink(
-    'Olá! Quero presentear vocês com a cota “'+g.nome+'” ('+brl(g.valor)+') 💚'
-  );
-
-  const codeBox=document.getElementById('pixmCode');
-  const btnCopiar=document.getElementById('pixmCopiar');
-  const hint=document.getElementById('pixmHint');
-  const chaveBox=document.getElementById('pixmChaveBox');
-
-  if(temPix()){
-    const codigo=pixCode(g.valor);
-    codeBox.textContent=codigo;
-    codeBox.style.display='';
-    btnCopiar.style.display='';
-    pixModal.dataset.codigo=codigo;
-    hint.innerHTML='Cole no app do seu banco em <strong>Pix copia e cola</strong>. O valor já vai preenchido.';
-    chaveBox.style.display='';
-    document.getElementById('pixmChave').textContent=formatarChave(CONFIG.pixChave);
-    document.getElementById('pixmTitular').textContent=CONFIG.pixTitular;
-  }else{
-    codeBox.style.display='none';
-    btnCopiar.style.display='none';
-    chaveBox.style.display='none';
-    pixModal.dataset.codigo='';
-    hint.innerHTML='A chave Pix ainda está sendo cadastrada. Fale com os noivos pelo WhatsApp que enviamos os dados para você. 💚';
-  }
-
-  pixModal.hidden=false;
-  document.body.style.overflow='hidden';
-}
-function fecharPix(){
-  if(!pixModal) return;
-  pixModal.hidden=true;
-  document.body.style.overflow='';
-  const b=document.getElementById('pixmCopiar');
-  b.classList.remove('copiado');
-  b.querySelector('span').textContent='Copiar código Pix';
-}
-if(pixModal){
-  pixModal.addEventListener('click',e=>{ if(e.target.closest('[data-fechar]')) fecharPix(); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!pixModal.hidden) fecharPix(); });
-  document.getElementById('pixmCopiar').addEventListener('click',async function(){
-    const codigo=pixModal.dataset.codigo||'';
-    const rotulo=this.querySelector('span');
-    let ok=false;
-    try{
-      await navigator.clipboard.writeText(codigo);
-      ok=true;
-    }catch(err){
-      try{
-        const ta=document.createElement('textarea');
-        ta.value=codigo; ta.style.position='fixed'; ta.style.opacity='0';
-        document.body.appendChild(ta); ta.select();
-        ok=document.execCommand('copy');
-        document.body.removeChild(ta);
-      }catch(e2){ ok=false; }
-    }
-    this.classList.toggle('copiado',ok);
-    rotulo.textContent=ok?'Código copiado!':'Copie o código acima';
-    setTimeout(()=>{
-      this.classList.remove('copiado');
-      rotulo.textContent='Copiar código Pix';
-    },2600);
-  });
-}
-
-/* ─── Galeria de presentes ─── */
-(function renderPresentes(){
-  const grid=document.getElementById('giftGrid');
-  if(!grid) return;
-  const svgPix='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3.2l8.8 8.8-8.8 8.8L3.2 12z"/><path d="M8.4 8.4l3.6 3.6 3.6-3.6"/></svg>';
-  const esc=s=>String(s||'').replace(/"/g,'&quot;');
-  grid.innerHTML=PRESENTES.map((g,i)=>{
-    const n=String(i+1).padStart(2,'0');
-    const arte=g.foto
-      ? `<img loading="lazy" src="${esc(g.foto)}" alt="${esc(g.nome)}">`
-      : `<span class="gi">${ico(g.ico)}</span>`;
-    return `<div class="gift-card reveal">
-      <div class="gift-photo"><span class="gift-num">${n}</span>${arte}</div>
-      <div class="gift-body">
-        <p class="gift-name">${g.nome}</p>
-        <p class="gift-sub">${g.sub||''}</p>
-        <p class="gift-val">${brl(g.valor)}</p>
-        <div class="gift-btns">
-          <button class="gp" type="button" data-pix="${g.id}">${svgPix}<span>Presentear</span></button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-  grid.addEventListener('click',e=>{
-    const b=e.target.closest('button[data-pix]');
-    if(b) abrirPix(Number(b.dataset.pix));
-  });
-})();
 
 /* ─── MÚSICA (YouTube oculto) ─── */
 let ytPlayer=null, ytPronto=false, querTocar=false, ytFalhou=false;
