@@ -53,9 +53,14 @@ O convite tenta duas fontes, nesta ordem:
 Se nenhuma das duas tocar, o botão de música simplesmente não aparece e o
 convite segue normal. Em nenhum caso o convidado é mandado para fora.
 
-Para garantir a música, suba um `.mp3` nesta pasta — ele passa na frente do
-YouTube automaticamente, sem precisar mexer em mais nada. Para deixar o convite
-sem música de vez, ponha os dois campos vazios (`''`).
+Hoje o convite usa o arquivo `musica.mp3` desta pasta, então o YouTube não
+chega a ser consultado. Para deixar o convite sem música de vez, ponha os dois
+campos vazios (`''`).
+
+O arquivo foi reduzido de 320 kbps (7,8 MB) para 128 kbps (3,1 MB): a música
+tem 3min23s e toca em fundo, no alto-falante do celular, onde a diferença não
+se ouve — mas 4,7 MB a menos pesam bastante para quem abre o convite no 4G.
+O original continua no histórico do Git, caso queiram voltar atrás.
 | `MANUAL` | os tópicos do Manual dos convidados (título, texto e ícone) |
 
 Para acrescentar um tópico ao manual, copie uma linha do `MANUAL` e troque o
