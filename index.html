@@ -226,6 +226,28 @@
      mas a caixa em volta o recorta a 1px e o deixa invisível */
   #ytHost{position:fixed;left:0;bottom:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1;}
 
+  /* ───────── PIX ───────── */
+  #pix{padding:58px 0;text-align:center;}
+  .pix-note{font-size:13.5px;line-height:1.85;color:var(--ink-soft);max-width:410px;margin:26px auto 0;}
+  .pix-card{
+    margin:34px auto 0;max-width:340px;padding:26px 24px;
+    border:1px solid var(--line);background:rgba(255,255,255,.6);border-radius:20px;
+    box-shadow:0 6px 18px rgba(85,99,47,.05);
+  }
+  .pix-label{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--olive-deep);text-indent:.3em;}
+  .pix-key{font-family:'Bodoni Moda',serif;font-size:25px;color:var(--ink);margin-top:12px;letter-spacing:.02em;}
+  .pix-name{font-size:13px;letter-spacing:.05em;color:var(--ink-soft);margin-top:9px;}
+  .pix-copy{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:22px;
+    font-family:'Jost',sans-serif;font-weight:300;font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;text-indent:.24em;
+    color:var(--paper);background:var(--olive-deep);border:1px solid var(--olive-deep);
+    border-radius:34px;padding:14px 18px;cursor:pointer;transition:.3s;
+  }
+  .pix-copy:hover{background:transparent;color:var(--olive-deep);}
+  .pix-copy.copiado{background:var(--olive);border-color:var(--olive);color:#fff;}
+  .pix-copy svg{width:14px;height:14px;flex-shrink:0;}
+
   /* ───────── RSVP ───────── */
   #rsvp{padding:64px 0 44px;text-align:center;}
   .rsvp-note{font-size:13.5px;line-height:1.85;color:var(--ink-soft);max-width:410px;margin:26px auto 0;}
@@ -438,7 +460,29 @@
     </div>
   </section>
 
+  <!-- PIX -->
+  <section id="pix">
+    <div class="inner">
+      <p class="sec-label reveal">presentes</p>
+      <h2 class="sec-title reveal">Para quem quiser <span class="it">presentear</span></h2>
+      <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
+      <p class="pix-note reveal d1">
+        Sua presença já é o nosso maior presente. Mas, para você que quer nos
+        presentear, deixamos aqui a nossa chave Pix.
+      </p>
+      <div class="pix-card reveal d2">
+        <p class="pix-label">Chave Pix · CPF</p>
+        <p class="pix-key" id="pixChave"></p>
+        <p class="pix-name" id="pixTitular"></p>
+        <button class="pix-copy" id="pixCopiar" type="button">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 15H4.5A1.5 1.5 0 013 13.5v-9A1.5 1.5 0 014.5 3h9A1.5 1.5 0 0115 4.5V5" stroke="currentColor" stroke-width="1.4"/></svg>
+          <span>Copiar chave Pix</span>
+        </button>
+      </div>
+    </div>
+  </section>
 
+  <!-- RSVP -->
   <section id="rsvp">
     <div class="inner">
       <p class="sec-label reveal">confirmação de presença</p>
@@ -500,6 +544,10 @@ const CONFIG = {
 
   // 💚 confirmação de presença — WhatsApp (14) 99754-4105
   whatsapp: '5514997544105',
+
+  // 💚 Pix, para quem quiser presentear
+  pixChave:   '45119432816',
+  pixTitular: 'Maria Clara Prado',
 
   versiculo:    'Assim, eles já não são dois, mas sim uma só carne. Portanto, o que Deus uniu, ninguém separe.',
   versiculoRef: 'Mateus 19:6',
@@ -573,6 +621,43 @@ const waLink=(msg)=>'https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent
 document.getElementById('confirmBtn').href=waLink(
   'Olá! Gostaria de confirmar minha presença no casamento de Maria & Felipe 💍\n\nNome:\nQuantas pessoas:'
 );
+
+/* ─── Pix ─── */
+(function montaPix(){
+  const sec=document.getElementById('pix');
+  if(!sec) return;
+  if(!CONFIG.pixChave){ sec.style.display='none'; return; }
+  /* 11 dígitos = CPF, e aí mostramos formatado. Qualquer outro tipo de chave
+     (telefone, e-mail, aleatória) aparece exatamente como foi escrita. */
+  const so=CONFIG.pixChave.replace(/\D/g,'');
+  const eCPF=/^\d{11}$/.test(CONFIG.pixChave);
+  document.getElementById('pixChave').textContent=
+    eCPF ? so.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4') : CONFIG.pixChave;
+  document.getElementById('pixTitular').textContent=CONFIG.pixTitular||'';
+  sec.querySelector('.pix-label').textContent=eCPF?'Chave Pix · CPF':'Chave Pix';
+
+  document.getElementById('pixCopiar').addEventListener('click',async function(){
+    /* copia a chave crua: é o que se cola no app do banco */
+    const chave=eCPF?so:CONFIG.pixChave;
+    const rotulo=this.querySelector('span');
+    let ok=false;
+    try{
+      await navigator.clipboard.writeText(chave); ok=true;
+    }catch(e){
+      /* navegador antigo ou página sem HTTPS */
+      try{
+        const ta=document.createElement('textarea');
+        ta.value=chave; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+      }catch(e2){ ok=false; }
+    }
+    this.classList.toggle('copiado',ok);
+    rotulo.textContent=ok?'Chave copiada!':'Copie a chave acima';
+    setTimeout(()=>{ this.classList.remove('copiado'); rotulo.textContent='Copiar chave Pix'; },2600);
+  });
+})();
 
 /* ─── Fotos opcionais (caem para um layout limpo se não existirem) ─── */
 function fotoOpcional(imgId,alvoId){
