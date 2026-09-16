@@ -17,8 +17,7 @@ Armazém Secos e Molhados — Bairro Monte Alegre, Pratânia / São Manuel — S
 - Versículo de **Mateus 19:6**
 - Cerimônia e recepção no mesmo local, com botão "Ver no mapa"
 - Contagem regressiva até o grande dia
-- Música ambiente (YouTube) tocando desde a abertura, com botão flutuante
-  para pausar
+- Música ambiente tocando desde a abertura, com botão flutuante para pausar
 - Dress code: traje social, com as cores reservadas
 - **Manual dos convidados** — 10 tópicos em acordeão
 - Confirmação de presença pelo WhatsApp **(14) 99754-4105**, sem prazo
@@ -31,8 +30,21 @@ O que muda com frequência está reunido no começo do `<script>`, em dois bloco
 |---|---|
 | `CONFIG` | nomes, data, horário, cidade, link do mapa, WhatsApp, música, versículo |
 
-Para trocar a música, cole o link do YouTube em `CONFIG.musica` — vale
-`watch?v=…`, `youtu.be/…`, `/embed/…`, `/shorts/…` ou só o ID do vídeo.
+### A música
+
+O convite toca um **arquivo de áudio hospedado junto com ele** — não usa o
+YouTube. O vídeo escolhido pelos noivos tem a reprodução bloqueada fora do
+site do YouTube, então embutir não funciona: o navegador se recusa a tocar e
+a única saída seria mandar o convidado para fora do convite.
+
+Para colocar a música:
+
+1. Suba o arquivo de áudio (`.mp3`) nesta pasta, junto do `index.html`
+2. Escreva o nome dele em `CONFIG.musica` (o padrão é `musica.mp3`)
+
+Enquanto o arquivo não existir, o convite funciona normalmente — o botão de
+música simplesmente não aparece. Para deixar o convite sem música de vez, é só
+pôr `musica: ''`.
 | `MANUAL` | os tópicos do Manual dos convidados (título, texto e ícone) |
 
 Para acrescentar um tópico ao manual, copie uma linha do `MANUAL` e troque o
@@ -60,7 +72,6 @@ hospedagem estática. Depois é só mandar o link no WhatsApp.
   apenas tira o mudo — por isso ela entra na hora, sem espera. Nenhum navegador
   de celular permite som antes de um toque do usuário, então esse é o mais
   automático que dá para ser.
-- Se o vídeo não puder ser tocado dentro do convite (dono do vídeo bloqueou a
-  reprodução em outros sites) ou o YouTube não carregar, o botão de música vira
-  um link "Ouvir no YouTube" em vez de sumir
+- Se o arquivo de áudio faltar ou o formato não for suportado, o botão de
+  música some e o convite segue normal — nunca manda o convidado para fora
 - Respeita `prefers-reduced-motion` para quem prefere menos animação

@@ -222,9 +222,6 @@
   #musicToggle:hover{background:var(--olive);color:#fff;border-color:var(--olive);}
   #musicToggle svg{width:14px;height:14px;flex-shrink:0;}
   #musicToggle .mt-label{white-space:nowrap;text-indent:.2em;}
-  /* o player fica invisível, mas presente: alguns navegadores não tocam
-     mídia de iframe minúsculo ou jogado para fora da tela */
-  #ytHost{position:fixed;right:0;bottom:0;width:320px;height:180px;opacity:0;pointer-events:none;z-index:-1;overflow:hidden;}
 
   /* ───────── RSVP ───────── */
   #rsvp{padding:64px 0 44px;text-align:center;}
@@ -463,8 +460,8 @@
  </div><!-- /.wrap -->
 </div><!-- /#main -->
 
-<!-- player do YouTube (oculto) -->
-<div id="ytHost"><div id="ytPlayer"></div></div>
+<!-- áudio do convite (arquivo hospedado junto, sem depender do YouTube) -->
+<audio id="audio" preload="auto" loop playsinline></audio>
 
 
 <!-- controle flutuante da música -->
@@ -485,9 +482,10 @@ const CONFIG = {
   dataEvento:'2026-11-28T16:00:00',            // usado na contagem regressiva
   dataTexto: '28 de Novembro de 2026',
 
-  // 🎵 música: cole aqui o link do YouTube em qualquer formato
-  //    (watch?v=…, youtu.be/…, /embed/…, /shorts/… ou só o ID)
-  musica: 'https://www.youtube.com/watch?v=VUf32ZK-Jd0',
+  // 🎵 música: arquivo de áudio hospedado junto com o convite.
+  //    Suba o arquivo nesta mesma pasta e escreva o nome dele aqui.
+  //    Deixe vazio ('') para o convite ficar sem música.
+  musica: 'musica.mp3',
 
   // 📍 local único — cerimônia e recepção
   mapLocal: 'https://www.google.com/maps?q=-22.86905288696289,-48.654335021972656&z=17&hl=pt-BR',
@@ -591,92 +589,65 @@ fotoOpcional('fotoLocal','artLocal');
 })();
 
 
-/* ─── MÚSICA (YouTube oculto) ─── */
-/* aceita watch?v=, youtu.be/, /embed/, /shorts/ ou o ID pelado */
-function idDoYouTube(link){
-  const t=String(link||'').trim();
-  if(!t) return '';
-  if(/^[\w-]{11}$/.test(t)) return t;
-  const m=t.match(/(?:v=|youtu\.be\/|\/embed\/|\/shorts\/|\/v\/)([\w-]{11})/);
-  return m?m[1]:'';
-}
-const YT_ID=idDoYouTube(CONFIG.musica);
-let ytPlayer=null, ytPronto=false, querTocar=false, ytFalhou=false, comSom=false;
+/* ─── MÚSICA (arquivo próprio) ───
+   Nada de YouTube: o vídeo que os noivos escolheram tem a reprodução
+   bloqueada fora do site, então a música vem de um arquivo hospedado
+   junto com o convite. */
+const audio=document.getElementById('audio');
 const musicToggle=document.getElementById('musicToggle');
+let comSom=false, temMusica=false;
+
 function setMusicIcon(p){
   document.getElementById('iconPlay').style.display=p?'none':'block';
   document.getElementById('iconPause').style.display=p?'block':'none';
   const r=document.getElementById('musicRow');
   if(r) r.style.display=p?'inline-flex':'none';
 }
-window.onYouTubeIframeAPIReady=function(){
-  ytPlayer=new YT.Player('ytPlayer',{
-    height:'180',width:'320',videoId:YT_ID,
-    /* autoplay mudo: é o único que os navegadores deixam acontecer sozinho.
-       Assim a música já está rodando (sem som) atrás da capa; o toque em
-       "toque para abrir" só tira o mudo, e ela entra na hora. */
-    playerVars:{autoplay:1,mute:1,controls:0,disablekb:1,fs:0,
-                modestbranding:1,playsinline:1,rel:0,loop:1,playlist:YT_ID},
-    events:{
-      onReady:()=>{
-        ytPronto=true;
-        try{ ytPlayer.mute(); ytPlayer.playVideo(); }catch(e){}
-        if(querTocar) tocar();
-      },
-      onStateChange:ev=>{
-        if(ev.data===YT.PlayerState.PLAYING){
-          if(comSom){ setMusicIcon(true); musicToggle.style.display='flex'; }
-        }
-        if(ev.data===YT.PlayerState.PAUSED) setMusicIcon(false);
-        /* loop:1 já repete, mas se algum navegador ignorar, voltamos ao início */
-        if(ev.data===YT.PlayerState.ENDED){ try{ytPlayer.seekTo(0);ytPlayer.playVideo();}catch(e){} }
-      },
-      /* vídeo com reprodução bloqueada em outros sites: em vez de sumir,
-         o botão vira um link para ouvir a música no YouTube */
-      onError:()=>{ ytFalhou=true; viraLinkDoYouTube(); }
-    }
-  });
-};
-(function carregaYT(){
-  if(!YT_ID) return;
-  const s=document.createElement('script');
-  s.src='https://www.youtube.com/iframe_api';
-  s.async=true;
-  s.onerror=()=>{ ytFalhou=true; viraLinkDoYouTube(); };
-  document.head.appendChild(s);
-})();
-function viraLinkDoYouTube(){
-  if(!YT_ID) return;
+function semMusica(){
+  temMusica=false; comSom=false;
+  musicToggle.style.display='none';
   setMusicIcon(false);
-  musicToggle.querySelector('.mt-label').textContent='Ouvir no YouTube';
-  musicToggle.style.display='flex';
-  musicToggle.onclick=()=>window.open('https://www.youtube.com/watch?v='+YT_ID,'_blank','noopener');
 }
+
+if(CONFIG.musica){
+  temMusica=true;
+  audio.src=CONFIG.musica;
+  audio.loop=true;
+  audio.volume=.6;
+  /* autoplay mudo é o único que os navegadores deixam acontecer sozinho:
+     a música já começa a rodar atrás da capa e o toque em "toque para
+     abrir" só tira o mudo, então ela entra na hora. */
+  audio.muted=true;
+  audio.play().catch(()=>{});
+  /* arquivo inexistente ou formato não suportado: some o botão,
+     em vez de mandar o convidado para fora do convite */
+  audio.addEventListener('error',semMusica);
+  audio.addEventListener('play',()=>{ if(comSom) setMusicIcon(true); });
+  audio.addEventListener('pause',()=>setMusicIcon(false));
+}else{
+  semMusica();
+}
+
 function tocar(){
-  querTocar=true;
-  if(!ytPronto||!ytPlayer) return;
-  try{
-    ytPlayer.unMute();
-    ytPlayer.setVolume(60);
-    /* precisa valer ANTES do play: é onStateChange quem acende o
-       "tocando agora", e ele pode responder na mesma hora */
-    comSom=true;
-    ytPlayer.playVideo();
-  }catch(e){}
+  if(!temMusica) return;
+  audio.muted=false;
+  audio.volume=.6;
+  comSom=true;
+  audio.play().then(()=>{
+    setMusicIcon(true);
+    musicToggle.style.display='flex';
+  }).catch(()=>{ /* navegador ainda não liberou: o próximo toque resolve */ });
 }
-function pausar(){
-  querTocar=false;
-  if(ytPronto&&ytPlayer){ try{ytPlayer.pauseVideo();}catch(e){} }
-}
-musicToggle.addEventListener('click',function(){
-  if(!ytPronto||!ytPlayer) return;
-  const st=ytPlayer.getPlayerState&&ytPlayer.getPlayerState();
-  if(st===YT.PlayerState.PLAYING && comSom) pausar(); else tocar();
+function pausar(){ comSom=false; audio.pause(); }
+
+musicToggle.addEventListener('click',()=>{
+  if(!temMusica) return;
+  if(audio.paused||audio.muted) tocar(); else pausar();
 });
-/* rede de segurança: se o som não tiver entrado na abertura,
+/* rede de segurança: se o som não entrar na abertura,
    o primeiro toque em qualquer lugar da página libera */
 ['touchend','click','keydown'].forEach(ev=>
-  document.addEventListener(ev,()=>{ if(!comSom) tocar(); },{once:true,passive:true})
+  document.addEventListener(ev,()=>{ if(temMusica&&(audio.paused||audio.muted)) tocar(); },{once:true,passive:true})
 );
 
 /* ─── SPLASH ─── */
@@ -686,7 +657,7 @@ document.getElementById('splash').addEventListener('click',function(){
   setTimeout(()=>{
     this.style.display='none';
     document.getElementById('main').classList.add('visible');
-    if(YT_ID && !ytFalhou) musicToggle.style.display='flex';
+    if(temMusica) musicToggle.style.display='flex';
     initReveal(); startCountdown();
     window.scrollTo(0,0);
   },950);
