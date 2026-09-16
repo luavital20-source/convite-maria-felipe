@@ -92,12 +92,6 @@
   .divider .ln.r{background:linear-gradient(90deg,var(--line),transparent);}
   .divider .dot{width:5px;height:5px;border:1px solid var(--olive);transform:rotate(45deg);}
 
-  /* raminho decorativo */
-  .sprig{
-    position:absolute;pointer-events:none;z-index:0;
-    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 180'%3E%3Cg fill='none' stroke='%238A9A5B' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M30 176C30 130 28 80 22 8'/%3E%3C/g%3E%3Cg fill='%238A9A5B'%3E%3Cellipse cx='16' cy='30' rx='11' ry='5' transform='rotate(-32 16 30)'/%3E%3Cellipse cx='40' cy='44' rx='11' ry='5' transform='rotate(28 40 44)'/%3E%3Cellipse cx='15' cy='62' rx='12' ry='5.2' transform='rotate(-28 15 62)'/%3E%3Cellipse cx='42' cy='80' rx='12' ry='5.2' transform='rotate(24 42 80)'/%3E%3Cellipse cx='16' cy='100' rx='12' ry='5.4' transform='rotate(-24 16 100)'/%3E%3Cellipse cx='43' cy='118' rx='12' ry='5.4' transform='rotate(22 43 118)'/%3E%3Cellipse cx='18' cy='138' rx='11' ry='5' transform='rotate(-20 18 138)'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
-  }
-
   /* ───────── HERO ───────── */
   .hero-photo{
     position:relative;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;
@@ -311,8 +305,6 @@
 
 <!-- ════════ SPLASH ════════ -->
 <div id="splash">
-  <span class="sprig" style="width:62px;height:186px;top:-22px;left:-8px;transform:rotate(-14deg);opacity:.35"></span>
-  <span class="sprig" style="width:72px;height:216px;bottom:-28px;right:-10px;transform:rotate(170deg);opacity:.35"></span>
   <div class="splash-inner">
     <svg class="mono splash-mono"><use href="#monograma"></use></svg>
     <h1 class="splash-names" id="splashNames"></h1>
@@ -339,7 +331,6 @@
 
   <!-- VERSÍCULO -->
   <section id="verse">
-    <span class="sprig" style="width:46px;height:132px;top:-14px;right:2px;transform:rotate(18deg);opacity:.22"></span>
     <div class="inner">
       <p class="verse-q reveal" id="verseText"></p>
       <p class="verse-ref reveal d1" id="verseRef"></p>
@@ -424,8 +415,8 @@
       <svg class="dress-icon reveal d1" viewBox="0 0 48 48" fill="none"><path d="M24 12a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.4"/><path d="M19 14l5 6 5-6M24 20v8M16 42c0-8 3-12 8-14 5 2 8 6 8 14z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
       <p class="dress-main reveal d1">Traje social</p>
       <p class="dress-note reveal d2">
-        Pedimos que evitem o <strong>branco</strong> e o <strong>verde oliva</strong>:
-        são as cores reservadas aos noivos e ao cortejo.
+        Pedimos que evitem o <strong>branco</strong> e o <strong>verde oliva</strong> —
+        são cores já reservadas.
       </p>
       <div class="palette reveal d2">
         <div class="pal"><i style="background:#FFFFFF"></i><span>Branco</span></div>
@@ -437,7 +428,6 @@
 
   <!-- MANUAL DOS CONVIDADOS -->
   <section id="manual">
-    <span class="sprig" style="width:46px;height:132px;bottom:20px;left:0;transform:rotate(-166deg);opacity:.2"></span>
     <div class="inner">
       <p class="sec-label reveal">para você não esquecer nada</p>
       <h2 class="sec-title reveal">Manual dos <span class="it">convidados</span></h2>
@@ -511,11 +501,11 @@ const CONFIG = {
    ════════════════════════════════════════════════════════════ */
 const MANUAL = [
   { ico:'chat', t:'Confirme sua presença',
-    d:'Avise pelo WhatsApp se você vem, com <b>seu nome e quantas pessoas</b>. É assim que organizamos as mesas e o jantar. Se o plano mudar depois, avise também — sem constrangimento nenhum.' },
+    d:'Avise pelo WhatsApp se você vem. É só um toque no botão de confirmação, aqui mesmo no convite.' },
   { ico:'ring', t:'Participe da cerimônia',
     d:'A cerimônia é o coração do nosso dia. Fique na celebração do começo ao fim, cante, ore e emocione-se conosco — é o momento mais importante para nós.' },
   { ico:'dress', t:'Branco é a cor da noiva',
-    d:'Só a noiva veste branco nesse dia. Evite também o <b>verde oliva</b>, reservado ao cortejo. Fora essas duas, use a cor que te deixa feliz.' },
+    d:'Só a noiva veste branco nesse dia. Evite também o <b>verde oliva</b> — é uma cor já reservada. Fora essas duas, use a cor que te deixa feliz.' },
   { ico:'cheers', t:'Aproveite bastante',
     d:'Coma, brinde, dance e fique à vontade. A festa é nossa, mas ela foi pensada para você se divertir com a gente.' },
   { ico:'cake', t:'Aguarde a liberação da mesa de doces',
