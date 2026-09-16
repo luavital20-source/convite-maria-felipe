@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#FBFAF5">
+<title>Maria &amp; Felipe — Casamento</title>
+<meta name="description" content="Convite de casamento de Maria e Felipe — 28 de novembro de 2026, Pratânia/SP.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ── Paleta: Branco & Verde Oliva ── */
+    --olive:#8A9A5B;
+    --olive-deep:#55632F;
+    --olive-soft:#C9D3AF;
+    --sage:#E6EAD8;
+    --paper:#FBFAF5;
+    --paper-2:#F3F2E9;
+    --ink:#2F332A;
+    --ink-soft:#585F52;
+    --line:#E4E7D6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;overflow-x:hidden;overscroll-behavior-x:none;}
+  body{
+    background:var(--paper);
+    color:var(--ink-soft);
+    font-family:'Jost',sans-serif;font-weight:300;
+    overflow-x:hidden;position:relative;
+  }
+  /* textura de papel */
+  body::before{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:.055;mix-blend-mode:multiply;
+  }
+  img{display:block;max-width:100%;}
+
+  /* ───────── MONOGRAMA (SVG próprio) ───────── */
+  /* o conteúdo do <symbol> usa atributos de apresentação:
+     CSS de fora não atravessa a shadow tree do <use>. Só herda 'color'. */
+  .mono{display:block;width:74px;height:auto;color:var(--ink);}
+
+  /* ───────── SPLASH ───────── */
+  #splash{
+    position:fixed;inset:0;z-index:1000;background:var(--paper);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    cursor:pointer;overflow:hidden;
+    transition:opacity 1s ease, transform 1s ease;
+  }
+  #splash.hide{opacity:0;pointer-events:none;transform:scale(1.04);}
+  .splash-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;padding:0 26px;}
+  .splash-mono{width:96px;color:var(--olive-deep);opacity:0;animation:fadeUp 1s .2s forwards;}
+  .splash-names{
+    font-family:'Bodoni Moda',serif;font-weight:400;
+    font-size:clamp(40px,12vw,70px);line-height:.96;color:var(--ink);
+    text-align:center;margin-top:24px;letter-spacing:.01em;
+    opacity:0;animation:fadeUp 1s .55s forwards;
+  }
+  .splash-names .amp{font-style:italic;color:var(--olive);font-weight:400;display:block;font-size:.5em;margin:.06em 0;}
+  .splash-date{
+    margin-top:22px;font-size:12px;font-weight:300;letter-spacing:.5em;
+    color:var(--olive-deep);text-indent:.5em;text-align:center;opacity:0;animation:fadeUp 1s .85s forwards;
+  }
+  .splash-hint{
+    position:absolute;bottom:52px;z-index:2;font-size:12px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--olive-deep);font-weight:400;opacity:0;
+    animation:pulse 2.6s 1.6s infinite;text-indent:.3em;
+    border:1px solid var(--olive-soft);padding:14px 28px;border-radius:40px;
+  }
+
+  /* ───────── BASE ───────── */
+  #main{display:none;position:relative;z-index:1;}
+  #main.visible{display:block;}
+  .wrap{max-width:560px;margin:0 auto;position:relative;}
+  section{position:relative;}
+  .inner{padding:0 34px;}
+  .sec-label{
+    font-size:10.5px;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--olive-deep);text-align:center;text-indent:.42em;
+  }
+  .sec-title{
+    font-family:'Bodoni Moda',serif;font-weight:400;
+    font-size:clamp(28px,8vw,40px);color:var(--ink);text-align:center;
+    line-height:1.08;margin-top:12px;
+  }
+  .sec-title .it{font-style:italic;color:var(--olive);}
+  .divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:22px auto 0;max-width:230px;}
+  .divider .ln{height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--line));}
+  .divider .ln.r{background:linear-gradient(90deg,var(--line),transparent);}
+  .divider .dot{width:5px;height:5px;border:1px solid var(--olive);transform:rotate(45deg);}
+
+  /* raminho decorativo */
+  .sprig{
+    position:absolute;pointer-events:none;z-index:0;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 180'%3E%3Cg fill='none' stroke='%238A9A5B' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M30 176C30 130 28 80 22 8'/%3E%3C/g%3E%3Cg fill='%238A9A5B'%3E%3Cellipse cx='16' cy='30' rx='11' ry='5' transform='rotate(-32 16 30)'/%3E%3Cellipse cx='40' cy='44' rx='11' ry='5' transform='rotate(28 40 44)'/%3E%3Cellipse cx='15' cy='62' rx='12' ry='5.2' transform='rotate(-28 15 62)'/%3E%3Cellipse cx='42' cy='80' rx='12' ry='5.2' transform='rotate(24 42 80)'/%3E%3Cellipse cx='16' cy='100' rx='12' ry='5.4' transform='rotate(-24 16 100)'/%3E%3Cellipse cx='43' cy='118' rx='12' ry='5.4' transform='rotate(22 43 118)'/%3E%3Cellipse cx='18' cy='138' rx='11' ry='5' transform='rotate(-20 18 138)'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  }
+
+  /* ───────── HERO ───────── */
+  .hero-photo{
+    position:relative;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;
+    height:58vh;min-height:400px;max-height:680px;overflow:hidden;
+    -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 50%,rgba(0,0,0,.55) 74%,rgba(0,0,0,0) 96%);
+            mask-image:linear-gradient(to bottom,#000 0%,#000 50%,rgba(0,0,0,.55) 74%,rgba(0,0,0,0) 96%);
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 32%;filter:saturate(.92) contrast(.98);}
+  .hero-photo::before{
+    content:'';position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg, rgba(85,99,47,.10) 0%, rgba(85,99,47,0) 26%, rgba(138,154,91,.06) 100%);
+  }
+  .hero-cap{position:relative;z-index:2;text-align:center;padding:0 28px;margin-top:-86px;}
+  .hero-mono{width:66px;margin:0 auto 18px;color:var(--ink);opacity:.92;}
+  .hero-names{
+    font-family:'Bodoni Moda',serif;font-weight:400;color:var(--ink);
+    font-size:clamp(42px,13vw,74px);line-height:.92;letter-spacing:.005em;
+  }
+  .hero-names .amp{display:block;font-style:italic;color:var(--olive);font-size:.46em;margin:.04em 0;}
+  .hero-sub{margin-top:18px;font-size:11.5px;letter-spacing:.38em;text-transform:uppercase;color:var(--olive-deep);text-indent:.38em;}
+  /* sem foto ainda: o hero vira um cabeçalho limpo */
+  .hero.no-photo .hero-photo{display:none;}
+  .hero.no-photo .hero-cap{margin-top:0;padding-top:76px;}
+
+  /* ───────── VERSÍCULO ───────── */
+  #verse{padding:74px 0 64px;text-align:center;}
+  .verse-q{
+    font-family:'Bodoni Moda',serif;font-style:italic;font-weight:400;
+    font-size:clamp(19px,5.2vw,25px);line-height:1.62;color:var(--ink);
+    max-width:440px;margin:0 auto;
+  }
+  .verse-ref{margin-top:24px;font-size:10.5px;letter-spacing:.38em;text-transform:uppercase;color:var(--olive-deep);text-indent:.38em;}
+
+  /* ───────── O DIA ───────── */
+  #day{padding:18px 0 8px;}
+  .quickfacts{display:flex;justify-content:center;margin:40px 0 8px;}
+  .qf{flex:1;text-align:center;padding:0 6px;}
+  .qf + .qf{border-left:1px solid var(--line);}
+  .qf .k{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--olive-deep);}
+  .qf .v{font-family:'Bodoni Moda',serif;font-size:19px;color:var(--ink);margin-top:9px;line-height:1.25;}
+  .qf .v small{display:block;font-family:'Jost';font-size:11px;letter-spacing:.04em;color:var(--ink-soft);margin-top:3px;}
+
+  .place{margin-top:48px;}
+  .place-art{position:relative;width:100%;overflow:hidden;border-radius:18px;}
+  .place-art img{width:100%;height:auto;}
+  .place-art.no-photo{display:none;}
+  .place-tag{
+    display:inline-block;font-size:10px;letter-spacing:.38em;text-transform:uppercase;
+    color:#fff;background:var(--olive-deep);padding:7px 16px;text-indent:.38em;border-radius:2px;
+  }
+  .place-tag.alt{background:var(--olive);}
+  .place-body{text-align:center;margin-top:22px;}
+  .place-time{font-family:'Bodoni Moda',serif;font-style:italic;font-size:24px;color:var(--olive);margin-top:14px;}
+  .place-name{font-family:'Bodoni Moda',serif;font-size:23px;color:var(--ink);margin-top:8px;line-height:1.25;}
+  .place-addr{font-size:13px;line-height:1.7;color:var(--ink-soft);margin-top:12px;max-width:360px;margin-left:auto;margin-right:auto;}
+  .place-note{
+    margin:26px auto 0;max-width:400px;padding:16px 20px;border:1px solid var(--line);
+    background:rgba(255,255,255,.6);border-radius:16px;
+    font-size:12.5px;line-height:1.75;color:var(--ink-soft);
+  }
+  .place-note b{font-weight:400;color:var(--ink);}
+  .btn-line{
+    display:inline-flex;align-items:center;gap:9px;margin-top:22px;
+    font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);
+    border:1px solid var(--ink);padding:12px 24px;text-decoration:none;text-indent:.24em;
+    transition:.35s;background:transparent;
+  }
+  .btn-line:hover{background:var(--ink);color:var(--paper);}
+  .btn-line svg{width:13px;height:13px;}
+
+  /* ───────── CONTAGEM ───────── */
+  #countdown{padding:78px 0;text-align:center;}
+  .cd-wrap{display:flex;justify-content:center;margin-top:40px;}
+  .cd-unit{flex:1;max-width:90px;}
+  .cd-unit + .cd-unit{border-left:1px solid var(--line);}
+  .cd-num{font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(34px,11vw,48px);color:var(--ink);line-height:1;display:block;}
+  .cd-lbl{font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--olive-deep);margin-top:10px;display:block;}
+
+  /* ───────── TRAJE / PALETA ───────── */
+  #dress{padding:58px 0;text-align:center;}
+  .dress-icon{width:34px;height:34px;margin:30px auto 0;color:var(--olive);}
+  .dress-main{font-family:'Bodoni Moda',serif;font-style:italic;font-size:26px;color:var(--ink);margin-top:20px;}
+  .dress-note{font-size:13.5px;line-height:1.8;color:var(--ink-soft);max-width:400px;margin:14px auto 0;}
+  .dress-note strong{color:var(--ink);font-weight:400;}
+  .palette{display:flex;justify-content:center;gap:26px;margin-top:34px;}
+  .pal{display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .pal i{width:54px;height:54px;border-radius:50%;display:block;border:1px solid var(--line);}
+  .pal span{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--olive-deep);text-indent:.24em;}
+
+  /* ───────── MANUAL DOS CONVIDADOS ───────── */
+  #manual{padding:58px 0;}
+  .man-list{margin-top:36px;display:flex;flex-direction:column;gap:12px;}
+  .man-item{
+    border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.58);
+    overflow:hidden;transition:border-color .3s;
+  }
+  .man-item[open]{border-color:var(--olive-soft);}
+  .man-item summary{
+    display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;list-style:none;
+    font-size:13.5px;letter-spacing:.06em;color:var(--ink);
+  }
+  .man-item summary::-webkit-details-marker{display:none;}
+  .man-ico{width:20px;height:20px;flex-shrink:0;color:var(--olive);}
+  .man-ico svg{width:100%;height:100%;}
+  .man-item summary .chev{
+    margin-left:auto;width:9px;height:9px;border-right:1px solid var(--olive-deep);border-bottom:1px solid var(--olive-deep);
+    transform:rotate(45deg);transition:transform .3s;flex-shrink:0;
+  }
+  .man-item[open] summary .chev{transform:rotate(-135deg);}
+  .man-body{padding:0 18px 18px 52px;font-size:13px;line-height:1.8;color:var(--ink-soft);}
+  .man-body b{font-weight:400;color:var(--ink);}
+
+  /* ───────── PRESENTES ───────── */
+  #gifts{padding:58px 0;text-align:center;}
+  .gift-note{font-size:13.5px;line-height:1.85;color:var(--ink-soft);max-width:410px;margin:26px auto 0;}
+  .gift-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:38px;text-align:left;}
+  .gift-card{
+    display:flex;flex-direction:column;overflow:hidden;border-radius:16px;
+    border:1px solid var(--line);background:rgba(255,255,255,.6);
+    box-shadow:0 6px 18px rgba(85,99,47,.05);transition:transform .4s,box-shadow .4s;
+  }
+  .gift-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(85,99,47,.12);}
+  .gift-photo{position:relative;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(150deg,var(--sage),var(--paper-2));
+    display:flex;align-items:center;justify-content:center;}
+  .gift-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.6,.2,1);}
+  .gift-card:hover .gift-photo img{transform:scale(1.06);}
+  .gift-photo .gi{width:42px;height:42px;color:var(--olive-deep);opacity:.85;}
+  .gift-photo .gi svg{width:100%;height:100%;}
+  .gift-num{
+    position:absolute;top:9px;left:9px;z-index:2;
+    display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 6px;
+    font-family:'Bodoni Moda',serif;font-size:12px;color:var(--paper);
+    background:rgba(85,99,47,.85);border-radius:20px;letter-spacing:.02em;
+  }
+  .gift-body{display:flex;flex-direction:column;flex:1;padding:14px 14px 16px;}
+  .gift-name{font-family:'Bodoni Moda',serif;font-size:15.5px;line-height:1.25;color:var(--ink);}
+  .gift-sub{font-size:11.5px;line-height:1.55;color:var(--ink-soft);margin-top:6px;flex:1;}
+  .gift-val{font-family:'Bodoni Moda',serif;font-style:italic;font-size:17px;color:var(--olive-deep);margin-top:12px;}
+  .gift-btns{display:flex;gap:8px;margin-top:14px;}
+  .gift-btns button{
+    flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;letter-spacing:.16em;text-transform:uppercase;text-indent:.16em;
+    padding:10px 6px;border-radius:30px;transition:.3s;cursor:pointer;white-space:nowrap;
+    background:var(--olive-deep);color:var(--paper);border:1px solid var(--olive-deep);
+  }
+  .gift-btns button:hover{background:transparent;color:var(--olive-deep);}
+  .gift-btns svg{width:12px;height:12px;flex-shrink:0;}
+
+  /* ── Modal do Pix ── */
+  .pixm{position:fixed;inset:0;z-index:1100;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .pixm[hidden]{display:none;}
+  .pixm-bg{position:absolute;inset:0;background:rgba(47,51,42,.55);backdrop-filter:blur(3px);animation:pixFade .3s both;}
+  .pixm-card{
+    position:relative;width:100%;max-width:360px;max-height:90vh;overflow-y:auto;
+    background:var(--paper);border:1px solid var(--line);border-radius:20px;
+    padding:30px 26px 26px;text-align:center;
+    box-shadow:0 24px 60px rgba(47,51,42,.28);animation:pixUp .38s cubic-bezier(.2,.6,.2,1) both;
+  }
+  .pixm-x{
+    position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;
+    border:1px solid var(--line);background:transparent;color:var(--ink-soft);
+    font-size:17px;line-height:1;cursor:pointer;transition:.3s;
+  }
+  .pixm-x:hover{background:var(--olive-deep);color:var(--paper);border-color:var(--olive-deep);}
+  .pixm-eyebrow{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--olive-deep);text-indent:.3em;}
+  .pixm-nome{font-family:'Bodoni Moda',serif;font-size:19px;color:var(--ink);margin-top:10px;line-height:1.25;}
+  .pixm-valor{font-family:'Bodoni Moda',serif;font-style:italic;font-size:30px;color:var(--olive);margin-top:6px;}
+  .pixm-code{
+    margin-top:20px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;
+    background:rgba(255,255,255,.7);font-family:'Jost',sans-serif;font-size:10px;
+    color:var(--ink-soft);word-break:break-all;line-height:1.6;max-height:88px;overflow-y:auto;text-align:left;
+  }
+  .pixm-copiar{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:16px;
+    font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;text-indent:.22em;
+    color:var(--paper);background:var(--olive-deep);border:1px solid var(--olive-deep);
+    border-radius:34px;padding:14px 18px;cursor:pointer;transition:.3s;
+  }
+  .pixm-copiar:hover{background:transparent;color:var(--olive-deep);}
+  .pixm-copiar.copiado{background:var(--olive);border-color:var(--olive);color:#fff;}
+  .pixm-copiar svg{width:14px;height:14px;flex-shrink:0;}
+  .pixm-hint{font-size:11.5px;line-height:1.7;color:var(--ink-soft);margin-top:14px;}
+  .pixm-hint strong{color:var(--ink);font-weight:400;}
+  .pixm-chave{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:11px;line-height:1.75;color:var(--ink-soft);}
+  .pixm-chave b{display:block;font-family:'Jost',sans-serif;font-weight:400;font-size:14px;color:var(--ink);letter-spacing:.06em;margin-top:3px;}
+  .pixm-wa{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;text-indent:.2em;text-decoration:none;
+    color:var(--olive-deep);border:1px solid var(--olive-soft);border-radius:34px;padding:12px 16px;transition:.3s;
+  }
+  .pixm-wa:hover{background:var(--olive-deep);color:var(--paper);border-color:var(--olive-deep);}
+  .pixm-wa svg{width:13px;height:13px;flex-shrink:0;}
+  @keyframes pixFade{from{opacity:0}to{opacity:1}}
+  @keyframes pixUp{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+  @media(max-width:360px){.gift-grid{gap:12px;}}
+
+  /* ───────── MÚSICA ───────── */
+  #music{padding:26px 0 8px;text-align:center;}
+  .music-row{display:none;align-items:center;gap:12px;color:var(--olive-deep);font-size:11px;letter-spacing:.3em;text-transform:uppercase;}
+  .music-row .bars{display:inline-flex;align-items:flex-end;gap:2px;height:14px;}
+  .music-row .bars i{width:2px;background:var(--olive);animation:eq 1s ease-in-out infinite;}
+  .music-row .bars i:nth-child(2){animation-delay:.2s}.music-row .bars i:nth-child(3){animation-delay:.4s}.music-row .bars i:nth-child(4){animation-delay:.1s}
+  #musicToggle{
+    position:fixed;right:16px;bottom:16px;z-index:900;
+    display:none;align-items:center;gap:9px;cursor:pointer;
+    background:var(--paper);border:1px solid var(--olive);color:var(--olive-deep);
+    border-radius:40px;padding:9px 16px 9px 13px;
+    box-shadow:0 8px 24px rgba(85,99,47,.2);transition:.3s;
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:400;
+  }
+  #musicToggle:hover{background:var(--olive);color:#fff;border-color:var(--olive);}
+  #musicToggle svg{width:14px;height:14px;flex-shrink:0;}
+  #musicToggle .mt-label{white-space:nowrap;text-indent:.2em;}
+  #ytHost{position:fixed;left:-9999px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;}
+
+  /* ───────── RSVP ───────── */
+  #rsvp{padding:64px 0 44px;text-align:center;}
+  .rsvp-note{font-size:13.5px;line-height:1.85;color:var(--ink-soft);max-width:410px;margin:26px auto 0;}
+  .rsvp-prazo{margin-top:18px;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--olive-deep);text-indent:.26em;}
+  .btn-fill{
+    display:inline-flex;align-items:center;gap:10px;margin-top:26px;
+    font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper);
+    background:var(--olive-deep);padding:15px 30px;text-decoration:none;text-indent:.24em;
+    transition:.35s;border:1px solid var(--olive-deep);
+  }
+  .btn-fill:hover{background:transparent;color:var(--olive-deep);}
+  .btn-fill svg{width:14px;height:14px;}
+
+  /* ───────── RODAPÉ ───────── */
+  footer{padding:60px 30px 46px;text-align:center;}
+  .footer-mono{width:64px;margin:0 auto 22px;color:var(--olive-deep);}
+  .footer-names{font-family:'Bodoni Moda',serif;font-size:30px;color:var(--ink);line-height:1;}
+  .footer-names .amp{font-style:italic;color:var(--olive);}
+  .footer-date{margin-top:14px;font-size:11px;letter-spacing:.38em;text-transform:uppercase;color:var(--olive-deep);text-indent:.38em;}
+  .footer-note{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--olive-deep);font-style:italic;font-family:'Bodoni Moda',serif;}
+
+  /* ───────── REVEAL ───────── */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);}
+  .reveal.visible{opacity:1;transform:none;}
+  .reveal.d1{transition-delay:.12s}.reveal.d2{transition-delay:.24s}.reveal.d3{transition-delay:.36s}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  @keyframes pulse{0%,100%{opacity:0}50%{opacity:.9}}
+  @keyframes eq{0%,100%{height:4px}50%{height:14px}}
+
+  @media(max-width:380px){.inner{padding:0 24px}.qf .v{font-size:17px}.palette{gap:18px}}
+  @media(min-width:760px){.hero-photo{height:78vh;min-height:540px}.hero-photo img{object-position:50% 38%;}}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .splash-mono,.splash-names,.splash-date{opacity:1;animation:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ MONOGRAMA (símbolo reutilizável) ════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="monograma" viewBox="0 0 240 164">
+    <g>
+      <path d="M120 148C97 148 76 141 60 128 45 116 34 99 29 80 26 69 25 62 25 54" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity=".8"/>
+      <ellipse cx="102" cy="153" rx="9.6" ry="3.9" transform="rotate(-6 102 153)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="85" cy="148" rx="9.2" ry="3.8" transform="rotate(-15 85 148)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="69" cy="140" rx="8.9" ry="3.7" transform="rotate(-27 69 140)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="55" cy="129" rx="8.6" ry="3.5" transform="rotate(-41 55 129)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="44" cy="114" rx="8.2" ry="3.4" transform="rotate(-55 44 114)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="35" cy="97" rx="7.8" ry="3.3" transform="rotate(-69 35 97)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="29" cy="79" rx="7.5" ry="3.2" transform="rotate(-81 29 79)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="26" cy="61" rx="7.2" ry="3.1" transform="rotate(-88 26 61)" fill="currentColor" opacity=".72"/>
+    </g>
+    <g transform="translate(240 0) scale(-1 1)">
+      <path d="M120 148C97 148 76 141 60 128 45 116 34 99 29 80 26 69 25 62 25 54" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity=".8"/>
+      <ellipse cx="102" cy="153" rx="9.6" ry="3.9" transform="rotate(-6 102 153)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="85" cy="148" rx="9.2" ry="3.8" transform="rotate(-15 85 148)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="69" cy="140" rx="8.9" ry="3.7" transform="rotate(-27 69 140)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="55" cy="129" rx="8.6" ry="3.5" transform="rotate(-41 55 129)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="44" cy="114" rx="8.2" ry="3.4" transform="rotate(-55 44 114)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="35" cy="97" rx="7.8" ry="3.3" transform="rotate(-69 35 97)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="29" cy="79" rx="7.5" ry="3.2" transform="rotate(-81 29 79)" fill="currentColor" opacity=".72"/>
+      <ellipse cx="26" cy="61" rx="7.2" ry="3.1" transform="rotate(-88 26 61)" fill="currentColor" opacity=".72"/>
+    </g>
+    <text x="85" y="104" font-size="72" text-anchor="middle" font-family="'Bodoni Moda', 'Didot', Georgia, serif" fill="currentColor">M</text>
+    <text x="120" y="111" font-size="28" text-anchor="middle" font-family="'Bodoni Moda', 'Didot', Georgia, serif" font-style="italic" fill="currentColor" opacity=".7">&amp;</text>
+    <text x="156" y="104" font-size="72" text-anchor="middle" font-family="'Bodoni Moda', 'Didot', Georgia, serif" fill="currentColor">F</text>
+  </symbol>
+</svg>
+
+<!-- ════════ SPLASH ════════ -->
+<div id="splash">
+  <span class="sprig" style="width:62px;height:186px;top:-22px;left:-8px;transform:rotate(-14deg);opacity:.35"></span>
+  <span class="sprig" style="width:72px;height:216px;bottom:-28px;right:-10px;transform:rotate(170deg);opacity:.35"></span>
+  <div class="splash-inner">
+    <svg class="mono splash-mono"><use href="#monograma"></use></svg>
+    <h1 class="splash-names" id="splashNames"></h1>
+    <p class="splash-date" id="splashDate"></p>
+  </div>
+  <p class="splash-hint">toque para abrir</p>
+</div>
+
+<!-- ════════ CONVITE ════════ -->
+<div id="main">
+ <div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-photo">
+      <img id="fotoCasal" src="fotos/casal.jpg" alt="Maria e Felipe">
+    </div>
+    <div class="hero-cap">
+      <svg class="mono hero-mono"><use href="#monograma"></use></svg>
+      <h2 class="hero-names" id="heroNames"></h2>
+      <p class="hero-sub" id="heroSub"></p>
+    </div>
+  </section>
+
+  <!-- VERSÍCULO -->
+  <section id="verse">
+    <span class="sprig" style="width:46px;height:132px;top:-14px;right:2px;transform:rotate(18deg);opacity:.22"></span>
+    <div class="inner">
+      <p class="verse-q reveal" id="verseText"></p>
+      <p class="verse-ref reveal d1" id="verseRef"></p>
+    </div>
+  </section>
+
+  <!-- BÊNÇÃO -->
+  <section id="bencao">
+    <div class="inner">
+      <p class="sec-label reveal">o convite</p>
+      <h2 class="sec-title reveal">Com a bênção de <span class="it">Deus</span></h2>
+      <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
+      <p class="rsvp-note reveal d1" style="margin-top:30px">e de seus pais, Maria e Felipe convidam você para celebrar o dia em que se tornarão uma só carne.</p>
+    </div>
+  </section>
+
+  <!-- O GRANDE DIA -->
+  <section id="day">
+    <div class="inner">
+      <p class="sec-label reveal">o grande dia</p>
+      <h2 class="sec-title reveal">Celebre <span class="it">conosco</span></h2>
+      <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
+
+      <div class="quickfacts reveal d1">
+        <div class="qf"><p class="k">Data</p><p class="v">28 de Novembro<small>sábado · 2026</small></p></div>
+        <div class="qf"><p class="k">Horário</p><p class="v">16h<small>cerimônia e festa</small></p></div>
+      </div>
+
+      <div class="place reveal">
+        <div class="place-art" id="artLocal">
+          <img id="fotoLocal" src="fotos/local.jpg" alt="Armazém Secos e Molhados">
+        </div>
+        <div class="place-body">
+          <span class="place-tag">Cerimônia</span>
+          <span class="place-tag alt" style="margin-left:6px">Recepção</span>
+          <p class="place-time">às 16h</p>
+          <p class="place-name">Armazém Secos e Molhados</p>
+          <p class="place-addr">Bairro Monte Alegre<br>Pratânia / São Manuel — SP</p>
+          <a class="btn-line" id="mapLocal" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.3"/></svg>
+            Ver no mapa
+          </a>
+          <p class="place-note">
+            <b>Cerimônia e recepção no mesmo lugar.</b><br>
+            Você não precisa se deslocar: logo após a celebração, a festa começa ali mesmo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTAGEM -->
+  <section id="countdown">
+    <div class="inner">
+      <p class="sec-label reveal">a contagem começou</p>
+      <h2 class="sec-title reveal">Falta <span class="it">pouco</span></h2>
+      <div class="cd-wrap reveal d1">
+        <div class="cd-unit"><span class="cd-num" id="cd-d">00</span><span class="cd-lbl">dias</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-h">00</span><span class="cd-lbl">horas</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-m">00</span><span class="cd-lbl">min</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl">seg</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÚSICA -->
+  <section id="music">
+    <div class="inner">
+      <div class="music-row" id="musicRow">
+        <span class="bars"><i></i><i></i><i></i><i></i></span>
+        <span id="musicTxt">tocando agora</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAJE -->
+  <section id="dress">
+    <div class="inner">
+      <p class="sec-label reveal">traje</p>
+      <h2 class="sec-title reveal">Dress <span class="it">code</span></h2>
+      <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
+      <svg class="dress-icon reveal d1" viewBox="0 0 48 48" fill="none"><path d="M24 12a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.4"/><path d="M19 14l5 6 5-6M24 20v8M16 42c0-8 3-12 8-14 5 2 8 6 8 14z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      <p class="dress-main reveal d1">Esporte fino</p>
+      <p class="dress-note reveal d2">
+        Venha bonito e confortável — a celebração é ao ar livre, em área rural.
+        Pedimos apenas que evitem o <strong>branco</strong> e o <strong>verde oliva</strong>,
+        cores reservadas aos noivos e ao cortejo.
+      </p>
+      <div class="palette reveal d2">
+        <div class="pal"><i style="background:#FFFFFF"></i><span>Branco</span></div>
+        <div class="pal"><i style="background:#8A9A5B"></i><span>Oliva</span></div>
+        <div class="pal"><i style="background:#55632F"></i><span>Oliva escuro</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANUAL DOS CONVIDADOS -->
+  <section id="manual">
+    <span class="sprig" style="width:46px;height:132px;bottom:20px;left:0;transform:rotate(-166deg);opacity:.2"></span>
+    <div class="inner">
+      <p class="sec-label reveal">para você não esquecer nada</p>
+      <h2 class="sec-title reveal">Manual dos <span class="it">convidados</span></h2>
+      <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
+      <div class="man-list reveal d1" id="manualList"></div>
+    </div>
+  </section>
+
+  <!-- PRESENTES -->
+  <section id="gifts">
+    <div class="inner">
+      <p class="sec-label reveal">presentes</p>
+      <h2 class="sec-title reveal">Lista de <span class="it">presentes</span></h2>
+      <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
+      <p class="gift-note reveal d1">
+        Nossa maior alegria é ter você conosco nesse dia. Mas, se quiser nos presentear,
+        escolha uma cota abaixo e contribua pelo Pix — cada uma ajuda a começar a nossa história.
+      </p>
+      <div class="gift-grid" id="giftGrid"></div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section id="rsvp">
+    <div class="inner">
+      <p class="sec-label reveal">confirmação de presença</p>
+      <h2 class="sec-title reveal">Você <span class="it">vem?</span></h2>
+      <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
+      <p class="rsvp-note reveal d1">Sua presença fará deste dia um momento ainda mais especial. Confirme pelo WhatsApp, com um toque.</p>
+      <p class="rsvp-prazo reveal d1" id="rsvpPrazo"></p>
+      <a class="btn-fill reveal d2" id="confirmBtn" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12 2a10 10 0 00-8.6 15.06L2 22l5.06-1.33A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.18-1.15l-.3-.18-3.1.81.83-3.02-.2-.31A8.2 8.2 0 1112 20.2z"/></svg>
+        Confirmar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <svg class="mono footer-mono"><use href="#monograma"></use></svg>
+    <p class="footer-names" id="footerNames"></p>
+    <p class="footer-date" id="footerDate"></p>
+    <p class="footer-note">“Portanto, o que Deus uniu, ninguém separe.” · Mateus 19:6</p>
+  </footer>
+
+ </div><!-- /.wrap -->
+</div><!-- /#main -->
+
+<!-- player do YouTube (oculto) -->
+<div id="ytHost"><div id="ytPlayer"></div></div>
+
+<!-- modal do Pix -->
+<div class="pixm" id="pixModal" hidden role="dialog" aria-modal="true" aria-labelledby="pixmNome">
+  <div class="pixm-bg" data-fechar></div>
+  <div class="pixm-card">
+    <button class="pixm-x" type="button" data-fechar aria-label="Fechar">&times;</button>
+    <p class="pixm-eyebrow">presente via pix</p>
+    <p class="pixm-nome" id="pixmNome"></p>
+    <p class="pixm-valor" id="pixmValor"></p>
+    <div class="pixm-code" id="pixmCode"></div>
+    <button class="pixm-copiar" id="pixmCopiar" type="button">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 15H4.5A1.5 1.5 0 013 13.5v-9A1.5 1.5 0 014.5 3h9A1.5 1.5 0 0115 4.5V5" stroke="currentColor" stroke-width="1.4"/></svg>
+      <span>Copiar código Pix</span>
+    </button>
+    <p class="pixm-hint" id="pixmHint">Cole no app do seu banco em <strong>Pix copia e cola</strong>. O valor já vai preenchido.</p>
+    <div class="pixm-chave" id="pixmChaveBox">
+      Ou use a chave Pix
+      <b id="pixmChave"></b>
+      <span id="pixmTitular"></span>
+    </div>
+    <a class="pixm-wa" id="pixmWa" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15.06L2 22l5.06-1.33A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.18-1.15l-.3-.18-3.1.81.83-3.02-.2-.31A8.2 8.2 0 1112 20.2z"/></svg>
+      Avisar os noivos
+    </a>
+  </div>
+</div>
+
+<!-- controle flutuante da música -->
+<div id="musicToggle" title="Nossa música">
+  <svg id="iconPlay" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+  <svg id="iconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+  <span class="mt-label">Nossa música</span>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   ⚙️  CONFIGURAÇÃO — edite somente este bloco
+   ════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  noivos:    'Maria & Felipe',
+  cidade:    'Pratânia · São Paulo',
+
+  dataEvento:'2026-11-28T16:00:00',            // usado na contagem regressiva
+  dataTexto: '28 de Novembro de 2026',
+  prazoRSVP: 'Confirme até 28 de outubro de 2026',
+
+  // 🎵 música: vídeo do YouTube (https://youtu.be/VUf32ZK-Jd0)
+  youtubeId: 'VUf32ZK-Jd0',
+
+  // 📍 local único — cerimônia e recepção
+  mapLocal: 'https://www.google.com/maps?q=-22.86905288696289,-48.654335021972656&z=17&hl=pt-BR',
+
+  // 💚 confirmação de presença — WhatsApp (14) 99754-4105
+  whatsapp: '5514997544105',
+
+  // ══ Pix — usado em todas as cotas de presente ══
+  // ⚠️ PREENCHA com a chave Pix dos noivos (CPF, telefone, e-mail ou aleatória).
+  //    Enquanto estiver vazio, o modal avisa o convidado e oferece o WhatsApp.
+  pixChave:   '',
+  pixTitular: 'Maria e Felipe',
+  pixCidade:  'PRATANIA',
+
+  versiculo:    'Assim, eles já não são dois, mas sim uma só carne. Portanto, o que Deus uniu, ninguém separe.',
+  versiculoRef: 'Mateus 19:6',
+};
+
+/* ════════════════════════════════════════════════════════════
+   📖  MANUAL DOS CONVIDADOS
+   ════════════════════════════════════════════════════════════ */
+const MANUAL = [
+  { ico:'clock', t:'Chegue com 30 minutos de antecedência',
+    d:'A cerimônia começa pontualmente às <b>16h</b>. Chegando às 15h30 você acomoda-se com calma e não perde a entrada da noiva. Se chegar depois do início, aguarde a orientação dos recepcionistas para entrar.' },
+  { ico:'dress', t:'Traje: esporte fino',
+    d:'Nada de gravata obrigatória, mas capriche. Como a celebração é em área rural e ao ar livre, prefira <b>sapatos confortáveis</b> — saltos muito finos podem afundar na grama.' },
+  { ico:'palette', t:'Cores reservadas',
+    d:'Por favor, evite o <b>branco</b> (é da noiva) e o <b>verde oliva</b> (é a cor do cortejo). Fora isso, use a cor que te deixa feliz.' },
+  { ico:'pin', t:'Como chegar e estacionar',
+    d:'<b>Armazém Secos e Molhados</b> — Bairro Monte Alegre, entre Pratânia e São Manuel/SP. Há estacionamento no local. Salve a rota no mapa <b>antes de sair</b>: o sinal de celular na região pode oscilar.' },
+  { ico:'camera', t:'Cerimônia sem celular',
+    d:'Temos fotógrafos cuidando de tudo. Durante a cerimônia, pedimos que guarde o celular e viva o momento conosco — na festa, fotografe à vontade e marque os noivos.' },
+  { ico:'child', t:'Crianças',
+    d:'Crianças são muito bem-vindas, acompanhadas dos pais ou responsáveis, que ficam atentos a elas durante a celebração.' },
+  { ico:'ring', t:'Cerimônia e festa no mesmo lugar',
+    d:'Você não precisa se deslocar. Logo após a celebração começam as fotos, o jantar e a festa — tudo no mesmo espaço.' },
+  { ico:'gift', t:'Presentes',
+    d:'Sua presença já é o maior presente. Quem quiser presentear pode escolher uma cota na <b>Lista de presentes</b> deste convite e contribuir pelo Pix.' },
+  { ico:'chat', t:'Confirmação de presença',
+    d:'Confirme pelo WhatsApp, informando <b>seu nome e o número de pessoas</b>. Isso nos ajuda a organizar mesas e jantar. Se o plano mudar, avise — sem constrangimento algum.' },
+];
+
+/* ════════════════════════════════════════════════════════════
+   🎁  PRESENTES — cotas da lista
+        valor → número em reais   |   foto → opcional (fotos/…)
+   ════════════════════════════════════════════════════════════ */
+const PRESENTES = [
+  { id:1,  ico:'plane',  nome:'Lua de mel dos sonhos',      sub:'Ajude a viagem mais esperada do casal.',        valor:500 },
+  { id:2,  ico:'heart',  nome:'Jantar do primeiro mês',     sub:'Uma mesa pra dois, com vela e tudo.',           valor:180 },
+  { id:3,  ico:'cup',    nome:'Café da manhã na cama',      sub:'Domingo preguiçoso patrocinado por você.',      valor:120 },
+  { id:4,  ico:'pan',    nome:'Panela nova pra casa nova',  sub:'Porque alguém vai ter que cozinhar.',           valor:200 },
+  { id:5,  ico:'bed',    nome:'Jogo de cama do casal',      sub:'Macio, novo e sem estampa de solteiro.',        valor:250 },
+  { id:6,  ico:'wash',   nome:'Cota da máquina de lavar',   sub:'Um pedacinho do eletrodoméstico dos sonhos.',   valor:300 },
+  { id:7,  ico:'towel',  nome:'Jogo de toalhas',            sub:'Pra ninguém mais roubar a toalha do outro.',    valor:110 },
+  { id:8,  ico:'fire',   nome:'Churrasco de domingo',       sub:'O noivo garante que você será convidado.',      valor:150 },
+  { id:9,  ico:'plant',  nome:'Plantinhas pra casa',        sub:'Verde oliva também dentro de casa.',            valor:80  },
+  { id:10, ico:'film',   nome:'Sessão de cinema a dois',    sub:'Ingressos, pipoca e briga pelo refrigerante.',  valor:90  },
+  { id:11, ico:'tv',     nome:'Streaming por um ano',       sub:'Para o programa oficial de sexta à noite.',     valor:130 },
+  { id:12, ico:'broom',  nome:'Faxina pós-lua de mel',      sub:'Pros noivos só descansarem ao voltar.',         valor:160 },
+  { id:13, ico:'paw',    nome:'Pet da família',             sub:'Ajuda pro futuro integrante de quatro patas.',  valor:200 },
+  { id:14, ico:'spa',    nome:'Dia de spa do casal',        sub:'Relaxar depois de tanta correria.',             valor:280 },
+  { id:15, ico:'camera2',nome:'Ensaio de 1 ano de casados', sub:'Pra registrar que deu tudo certo.',             valor:400 },
+  { id:16, ico:'coin',   nome:'Cota “só pra dizer que dei”',sub:'Carinho não se mede em reais.',                 valor:50  },
+];
+
+/* ════════════════════════════════════════════════════════════
+   A partir daqui é o funcionamento — não precisa mexer.
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── Ícones ─── */
+const S=(d,extra='')=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">'+d+extra+'</svg>';
+const ICONES={
+  clock:  S('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>'),
+  dress:  S('<path d="M9 3l3 4 3-4M9 3h6M12 7v3M8 21c0-5 1.6-8 4-9 2.4 1 4 4 4 9z"/>'),
+  palette:S('<path d="M12 3a9 9 0 000 18c1.1 0 1.8-.8 1.8-1.7 0-.9-.7-1.5-.7-2.3 0-.8.7-1.5 1.6-1.5H16a5 5 0 005-5c0-4.1-4-7.5-9-7.5z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="11" r="1"/>'),
+  pin:    S('<path d="M12 2C8.3 2 5.5 4.8 5.5 8.5 5.5 13.4 12 22 12 22s6.5-8.6 6.5-13.5C18.5 4.8 15.7 2 12 2z"/><circle cx="12" cy="8.5" r="2.4"/>'),
+  camera: S('<path d="M3 8.5A1.5 1.5 0 014.5 7h2.2l1.2-2h8.2l1.2 2h2.2A1.5 1.5 0 0121 8.5v9A1.5 1.5 0 0119.5 19h-15A1.5 1.5 0 013 17.5z"/><circle cx="12" cy="13" r="3.4"/>'),
+  child:  S('<circle cx="12" cy="6" r="2.6"/><path d="M12 8.6V15M8 11l4-1.4 4 1.4M9.5 21L12 15l2.5 6"/>'),
+  ring:   S('<circle cx="12" cy="15" r="5.2"/><path d="M12 9.8L8.6 6.6 10.2 4h3.6l1.6 2.6z"/><path d="M8.6 6.6h6.8M12 4v2.6"/>'),
+  gift:   S('<path d="M3 10h18v3H3zM4.5 13H19.5v7a1 1 0 01-1 1h-13a1 1 0 01-1-1zM12 10v11"/><path d="M12 10S10.5 4 8 5.2 10.2 10 12 10zM12 10s1.5-6 4-4.8S13.8 10 12 10z"/>'),
+  chat:   S('<path d="M21 12a8 8 0 01-11.6 7.1L4 21l1.9-5A8 8 0 1121 12z"/>'),
+  plane:  S('<path d="M10.5 13.5L3 11l18-7-7 18-2.5-7.5z"/><path d="M10.5 13.5L21 4"/>'),
+  heart:  S('<path d="M12 20s-7-4.4-7-9.2A4 4 0 0112 8.4 4 4 0 0119 10.8c0 4.8-7 9.2-7 9.2z"/>'),
+  cup:    S('<path d="M4 8h13v6a5 5 0 01-5 5H9a5 5 0 01-5-5z"/><path d="M17 9.5h1.6A2.4 2.4 0 0121 12a2.4 2.4 0 01-2.4 2.4H17M6 5V3M10 5V3M14 5V3"/>'),
+  pan:    S('<path d="M6 3v5a2 2 0 004 0V3M8 10v11M17.2 3c1.5 1.9 1.5 5.6 0 7.5V21"/>'),
+  bed:    S('<path d="M3 18V7M3 12h18v6M3 18h18M7 12V9.5h4.5V12"/>'),
+  wash:   S('<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="14" r="4"/><circle cx="8" cy="6.5" r=".8" fill="currentColor"/>'),
+  towel:  S('<path d="M6 4h12v16H6z"/><path d="M6 8h12M9 4v16"/>'),
+  fire:   S('<path d="M12 21c3.3 0 6-2.5 6-5.7 0-4.2-4.5-5.8-3.6-10.3C11.6 6 8.4 8.6 8.4 12c-1-.6-1.5-1.8-1.5-1.8C6.3 11.3 6 12.9 6 14.3 6 18 8.7 21 12 21z"/>'),
+  plant:  S('<path d="M12 21v-8"/><path d="M12 13c0-3.3 2.4-6 5.5-6 0 3.3-2.4 6-5.5 6zM12 15c0-2.8-2-5-4.8-5 0 2.8 2 5 4.8 5z"/><path d="M8.5 21h7"/>'),
+  film:   S('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 12h18"/>'),
+  tv:     S('<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 21h8M10 11l4 1.5-4 1.5z"/>'),
+  broom:  S('<path d="M15 4l-7 7M5 21c-1-3 1-6 4-7l3 3c-1 3-4 5-7 4z"/><path d="M12.5 10.5l4.5 4.5"/><path d="M16 9l4 4"/>'),
+  paw:    S('<circle cx="8" cy="8" r="1.9"/><circle cx="16" cy="8" r="1.9"/><circle cx="5.5" cy="13" r="1.7"/><circle cx="18.5" cy="13" r="1.7"/><path d="M12 12c2.6 0 4.5 2.1 4.5 4.3 0 1.7-1.3 2.9-3 2.9-.9 0-1.1-.4-1.5-.4s-.6.4-1.5.4c-1.7 0-3-1.2-3-2.9C7.5 14.1 9.4 12 12 12z"/>'),
+  spa:    S('<path d="M12 21c0-4 2.5-7 6.5-8-1 4-3 6.5-6.5 8zM12 21c0-4-2.5-7-6.5-8 1 4 3 6.5 6.5 8z"/><path d="M12 13c1.8-1.5 2.6-3.3 2.6-5.2C14.6 5.6 13.6 4 12 3c-1.6 1-2.6 2.6-2.6 4.8 0 1.9.8 3.7 2.6 5.2z"/>'),
+  camera2:S('<rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.5 7l1.2-2h4.6l1.2 2"/>'),
+  coin:   S('<circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.2c-.6-.7-1.5-1-2.5-1-1.5 0-2.5.8-2.5 1.9 0 2.6 5 1.3 5 3.9 0 1.1-1 1.9-2.5 1.9-1.1 0-2-.4-2.6-1.1M12 6.6v1.6M12 15.8v1.6"/>'),
+};
+const ico=n=>ICONES[n]||ICONES.gift;
+
+/* ─── Textos do CONFIG ─── */
+function txt(id,v){const e=document.getElementById(id);if(e)e.innerHTML=v;}
+function namesHTML(s){
+  const p=s.split(/\s*&\s*/);
+  return p.length===2 ? p[0]+'<span class="amp">&amp;</span>'+p[1] : s;
+}
+txt('splashNames',namesHTML(CONFIG.noivos));
+txt('heroNames',namesHTML(CONFIG.noivos));
+txt('footerNames',CONFIG.noivos.replace(/&/,'<span class="amp">&amp;</span>'));
+txt('splashDate',CONFIG.dataTexto.replace(/ de /g,' · '));
+txt('heroSub',CONFIG.cidade);
+txt('footerDate',CONFIG.dataTexto);
+txt('verseText','“'+CONFIG.versiculo+'”');
+txt('verseRef',CONFIG.versiculoRef);
+txt('rsvpPrazo',CONFIG.prazoRSVP||'');
+document.getElementById('mapLocal').href=CONFIG.mapLocal;
+document.title=CONFIG.noivos+' — Casamento';
+
+/* ─── WhatsApp ─── */
+const waLink=(msg)=>'https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(msg);
+document.getElementById('confirmBtn').href=waLink(
+  'Olá! Gostaria de confirmar minha presença no casamento de Maria & Felipe 💍\n\nNome:\nQuantas pessoas:'
+);
+
+/* ─── Fotos opcionais (caem para um layout limpo se não existirem) ─── */
+function fotoOpcional(imgId,alvoId){
+  const img=document.getElementById(imgId), alvo=document.getElementById(alvoId);
+  if(!img||!alvo) return;
+  const falhou=()=>alvo.classList.add('no-photo');
+  img.addEventListener('error',falhou);
+  // a imagem pode ter falhado antes deste script rodar
+  if(img.complete && img.naturalWidth===0) falhou();
+}
+fotoOpcional('fotoCasal','hero');
+fotoOpcional('fotoLocal','artLocal');
+
+/* ─── Manual dos convidados ─── */
+(function renderManual(){
+  const box=document.getElementById('manualList');
+  if(!box) return;
+  box.innerHTML=MANUAL.map((m,i)=>`<details class="man-item"${i===0?' open':''}>
+      <summary><span class="man-ico">${ico(m.ico)}</span>${m.t}<span class="chev"></span></summary>
+      <div class="man-body">${m.d}</div>
+    </details>`).join('');
+})();
+
+/* ═══════════ PIX — código "copia e cola" (BR Code / Banco Central) ═══════════ */
+function pixCRC16(s){
+  let c=0xFFFF;
+  for(let i=0;i<s.length;i++){
+    c^=s.charCodeAt(i)<<8;
+    for(let j=0;j<8;j++) c=(c&0x8000)?((c<<1)^0x1021)&0xFFFF:(c<<1)&0xFFFF;
+  }
+  return c.toString(16).toUpperCase().padStart(4,'0');
+}
+function pixCode(valor){
+  const tlv=(id,v)=>id+String(v.length).padStart(2,'0')+v;
+  const ascii=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\x20-\x7E]/g,'').toUpperCase();
+  let p='';
+  p+=tlv('00','01');
+  p+=tlv('26',tlv('00','br.gov.bcb.pix')+tlv('01',CONFIG.pixChave));
+  p+=tlv('52','0000');
+  p+=tlv('53','986');
+  if(valor) p+=tlv('54',Number(valor).toFixed(2));
+  p+=tlv('58','BR');
+  p+=tlv('59',ascii(CONFIG.pixTitular).slice(0,25));
+  p+=tlv('60',ascii(CONFIG.pixCidade).slice(0,15));
+  p+=tlv('62',tlv('05','***'));
+  p+='6304';
+  return p+pixCRC16(p);
+}
+function formatarChave(c){
+  const so=c.replace(/\D/g,'');
+  if(/^\d{11}$/.test(c)) return c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4');
+  if(so.length===11 && /^\+?\d+$/.test(c)) return c;
+  return c;
+}
+const temPix=()=>!!(CONFIG.pixChave && CONFIG.pixChave.trim());
+
+/* ─── Modal do Pix ─── */
+const pixModal=document.getElementById('pixModal');
+const brl=v=>Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:0,maximumFractionDigits:0});
+function abrirPix(id){
+  const g=PRESENTES.find(p=>p.id===id);
+  if(!g||!pixModal) return;
+  document.getElementById('pixmNome').textContent=g.nome;
+  document.getElementById('pixmValor').textContent=brl(g.valor);
+  document.getElementById('pixmWa').href=waLink(
+    'Olá! Quero presentear vocês com a cota “'+g.nome+'” ('+brl(g.valor)+') 💚'
+  );
+
+  const codeBox=document.getElementById('pixmCode');
+  const btnCopiar=document.getElementById('pixmCopiar');
+  const hint=document.getElementById('pixmHint');
+  const chaveBox=document.getElementById('pixmChaveBox');
+
+  if(temPix()){
+    const codigo=pixCode(g.valor);
+    codeBox.textContent=codigo;
+    codeBox.style.display='';
+    btnCopiar.style.display='';
+    pixModal.dataset.codigo=codigo;
+    hint.innerHTML='Cole no app do seu banco em <strong>Pix copia e cola</strong>. O valor já vai preenchido.';
+    chaveBox.style.display='';
+    document.getElementById('pixmChave').textContent=formatarChave(CONFIG.pixChave);
+    document.getElementById('pixmTitular').textContent=CONFIG.pixTitular;
+  }else{
+    codeBox.style.display='none';
+    btnCopiar.style.display='none';
+    chaveBox.style.display='none';
+    pixModal.dataset.codigo='';
+    hint.innerHTML='A chave Pix ainda está sendo cadastrada. Fale com os noivos pelo WhatsApp que enviamos os dados para você. 💚';
+  }
+
+  pixModal.hidden=false;
+  document.body.style.overflow='hidden';
+}
+function fecharPix(){
+  if(!pixModal) return;
+  pixModal.hidden=true;
+  document.body.style.overflow='';
+  const b=document.getElementById('pixmCopiar');
+  b.classList.remove('copiado');
+  b.querySelector('span').textContent='Copiar código Pix';
+}
+if(pixModal){
+  pixModal.addEventListener('click',e=>{ if(e.target.closest('[data-fechar]')) fecharPix(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!pixModal.hidden) fecharPix(); });
+  document.getElementById('pixmCopiar').addEventListener('click',async function(){
+    const codigo=pixModal.dataset.codigo||'';
+    const rotulo=this.querySelector('span');
+    let ok=false;
+    try{
+      await navigator.clipboard.writeText(codigo);
+      ok=true;
+    }catch(err){
+      try{
+        const ta=document.createElement('textarea');
+        ta.value=codigo; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+      }catch(e2){ ok=false; }
+    }
+    this.classList.toggle('copiado',ok);
+    rotulo.textContent=ok?'Código copiado!':'Copie o código acima';
+    setTimeout(()=>{
+      this.classList.remove('copiado');
+      rotulo.textContent='Copiar código Pix';
+    },2600);
+  });
+}
+
+/* ─── Galeria de presentes ─── */
+(function renderPresentes(){
+  const grid=document.getElementById('giftGrid');
+  if(!grid) return;
+  const svgPix='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3.2l8.8 8.8-8.8 8.8L3.2 12z"/><path d="M8.4 8.4l3.6 3.6 3.6-3.6"/></svg>';
+  const esc=s=>String(s||'').replace(/"/g,'&quot;');
+  grid.innerHTML=PRESENTES.map((g,i)=>{
+    const n=String(i+1).padStart(2,'0');
+    const arte=g.foto
+      ? `<img loading="lazy" src="${esc(g.foto)}" alt="${esc(g.nome)}">`
+      : `<span class="gi">${ico(g.ico)}</span>`;
+    return `<div class="gift-card reveal">
+      <div class="gift-photo"><span class="gift-num">${n}</span>${arte}</div>
+      <div class="gift-body">
+        <p class="gift-name">${g.nome}</p>
+        <p class="gift-sub">${g.sub||''}</p>
+        <p class="gift-val">${brl(g.valor)}</p>
+        <div class="gift-btns">
+          <button class="gp" type="button" data-pix="${g.id}">${svgPix}<span>Presentear</span></button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  grid.addEventListener('click',e=>{
+    const b=e.target.closest('button[data-pix]');
+    if(b) abrirPix(Number(b.dataset.pix));
+  });
+})();
+
+/* ─── MÚSICA (YouTube oculto) ─── */
+let ytPlayer=null, ytPronto=false, querTocar=false, ytFalhou=false;
+const musicToggle=document.getElementById('musicToggle');
+function setMusicIcon(p){
+  document.getElementById('iconPlay').style.display=p?'none':'block';
+  document.getElementById('iconPause').style.display=p?'block':'none';
+  const r=document.getElementById('musicRow');
+  if(r) r.style.display=p?'inline-flex':'none';
+}
+window.onYouTubeIframeAPIReady=function(){
+  ytPlayer=new YT.Player('ytPlayer',{
+    height:'1',width:'1',videoId:CONFIG.youtubeId,
+    playerVars:{autoplay:0,controls:0,disablekb:1,fs:0,modestbranding:1,playsinline:1,rel:0,loop:1,playlist:CONFIG.youtubeId},
+    events:{
+      onReady:()=>{
+        ytPronto=true;
+        try{ytPlayer.setVolume(60);}catch(e){}
+        if(querTocar) tocar();
+      },
+      onStateChange:ev=>{
+        if(ev.data===YT.PlayerState.PLAYING){ setMusicIcon(true); musicToggle.style.display='flex'; }
+        if(ev.data===YT.PlayerState.PAUSED)  setMusicIcon(false);
+        if(ev.data===YT.PlayerState.ENDED){ try{ytPlayer.seekTo(0);ytPlayer.playVideo();}catch(e){} }
+      },
+      onError:()=>{ ytFalhou=true; musicToggle.style.display='none'; }
+    }
+  });
+};
+(function carregaYT(){
+  if(!CONFIG.youtubeId) return;
+  const s=document.createElement('script');
+  s.src='https://www.youtube.com/iframe_api';
+  s.async=true;
+  s.onerror=()=>{ ytFalhou=true; musicToggle.style.display='none'; };
+  document.head.appendChild(s);
+})();
+function tocar(){ querTocar=true; if(ytPronto&&ytPlayer){ try{ytPlayer.playVideo();}catch(e){} } }
+function pausar(){ querTocar=false; if(ytPronto&&ytPlayer){ try{ytPlayer.pauseVideo();}catch(e){} } }
+musicToggle.addEventListener('click',function(){
+  if(!ytPronto||!ytPlayer) return;
+  const st=ytPlayer.getPlayerState&&ytPlayer.getPlayerState();
+  if(st===YT.PlayerState.PLAYING) pausar(); else tocar();
+});
+
+/* ─── SPLASH ─── */
+document.getElementById('splash').addEventListener('click',function(){
+  tocar();
+  this.classList.add('hide');
+  setTimeout(()=>{
+    this.style.display='none';
+    document.getElementById('main').classList.add('visible');
+    if(CONFIG.youtubeId && !ytFalhou) musicToggle.style.display='flex';
+    initReveal(); startCountdown();
+    window.scrollTo(0,0);
+  },950);
+});
+
+/* ─── REVEAL ─── */
+function initReveal(){
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+/* ─── CONTAGEM REGRESSIVA ─── */
+function startCountdown(){
+  const target=new Date(CONFIG.dataEvento);const pad=n=>String(n).padStart(2,'0');
+  function upd(){
+    const diff=target-new Date();
+    if(diff<=0){
+      document.querySelector('#countdown .cd-wrap').innerHTML='<p style="font-family:Bodoni Moda,serif;font-style:italic;font-size:26px;color:var(--olive);width:100%;text-align:center">É hoje! Que Deus abençoe este dia</p>';
+      return;
+    }
+    document.getElementById('cd-d').textContent=pad(Math.floor(diff/864e5));
+    document.getElementById('cd-h').textContent=pad(Math.floor(diff%864e5/36e5));
+    document.getElementById('cd-m').textContent=pad(Math.floor(diff%36e5/6e4));
+    document.getElementById('cd-s').textContent=pad(Math.floor(diff%6e4/1e3));
+  }
+  upd();setInterval(upd,1000);
+}
+</script>
+</body>
+</html>
