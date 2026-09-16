@@ -17,8 +17,8 @@ Armazém Secos e Molhados — Bairro Monte Alegre, Pratânia / São Manuel — S
 - Versículo de **Mateus 19:6**
 - Cerimônia e recepção no mesmo local, com botão "Ver no mapa"
 - Contagem regressiva até o grande dia
-- Música ambiente (YouTube), que começa quando o convidado toca para abrir,
-  com botão flutuante para pausar
+- Música ambiente (YouTube) tocando desde a abertura, com botão flutuante
+  para pausar
 - Dress code: traje social, com as cores reservadas
 - **Manual dos convidados** — 10 tópicos em acordeão
 - Confirmação de presença pelo WhatsApp **(14) 99754-4105**, sem prazo
@@ -52,7 +52,10 @@ hospedagem estática. Depois é só mandar o link no WhatsApp.
 
 - Pensado para celular (o convite circula por WhatsApp), mas se adapta a telas grandes
 - Fontes: Bodoni Moda + Jost (Google Fonts)
-- A música é iniciada pelo toque do convidado em "toque para abrir", para o
-  navegador não bloquear o áudio; se o YouTube não carregar, o botão de música
-  some sozinho em vez de ficar sem função
+- A música começa a tocar **mudo** assim que a página carrega (o único autoplay
+  que os navegadores permitem sem interação) e o toque em "toque para abrir"
+  apenas tira o mudo — por isso ela entra na hora, sem espera. Nenhum navegador
+  de celular permite som antes de um toque do usuário, então esse é o mais
+  automático que dá para ser.
+- Se o YouTube não carregar, o botão de música some sozinho em vez de ficar sem função
 - Respeita `prefers-reduced-motion` para quem prefere menos animação

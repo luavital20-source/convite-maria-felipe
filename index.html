@@ -222,7 +222,9 @@
   #musicToggle:hover{background:var(--olive);color:#fff;border-color:var(--olive);}
   #musicToggle svg{width:14px;height:14px;flex-shrink:0;}
   #musicToggle .mt-label{white-space:nowrap;text-indent:.2em;}
-  #ytHost{position:fixed;left:-9999px;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;}
+  /* o player fica invisível, mas presente: alguns navegadores não tocam
+     mídia de iframe minúsculo ou jogado para fora da tela */
+  #ytHost{position:fixed;right:0;bottom:0;width:320px;height:180px;opacity:0;pointer-events:none;z-index:-1;overflow:hidden;}
 
   /* ───────── RSVP ───────── */
   #rsvp{padding:64px 0 44px;text-align:center;}
@@ -589,7 +591,7 @@ fotoOpcional('fotoLocal','artLocal');
 
 
 /* ─── MÚSICA (YouTube oculto) ─── */
-let ytPlayer=null, ytPronto=false, querTocar=false, ytFalhou=false;
+let ytPlayer=null, ytPronto=false, querTocar=false, ytFalhou=false, comSom=false;
 const musicToggle=document.getElementById('musicToggle');
 function setMusicIcon(p){
   document.getElementById('iconPlay').style.display=p?'none':'block';
@@ -599,17 +601,24 @@ function setMusicIcon(p){
 }
 window.onYouTubeIframeAPIReady=function(){
   ytPlayer=new YT.Player('ytPlayer',{
-    height:'1',width:'1',videoId:CONFIG.youtubeId,
-    playerVars:{autoplay:0,controls:0,disablekb:1,fs:0,modestbranding:1,playsinline:1,rel:0,loop:1,playlist:CONFIG.youtubeId},
+    height:'180',width:'320',videoId:CONFIG.youtubeId,
+    /* autoplay mudo: é o único que os navegadores deixam acontecer sozinho.
+       Assim a música já está rodando (sem som) atrás da capa; o toque em
+       "toque para abrir" só tira o mudo, e ela entra na hora. */
+    playerVars:{autoplay:1,mute:1,controls:0,disablekb:1,fs:0,
+                modestbranding:1,playsinline:1,rel:0,loop:1,playlist:CONFIG.youtubeId},
     events:{
       onReady:()=>{
         ytPronto=true;
-        try{ytPlayer.setVolume(60);}catch(e){}
+        try{ ytPlayer.mute(); ytPlayer.playVideo(); }catch(e){}
         if(querTocar) tocar();
       },
       onStateChange:ev=>{
-        if(ev.data===YT.PlayerState.PLAYING){ setMusicIcon(true); musicToggle.style.display='flex'; }
-        if(ev.data===YT.PlayerState.PAUSED)  setMusicIcon(false);
+        if(ev.data===YT.PlayerState.PLAYING){
+          if(comSom){ setMusicIcon(true); musicToggle.style.display='flex'; }
+        }
+        if(ev.data===YT.PlayerState.PAUSED) setMusicIcon(false);
+        /* loop:1 já repete, mas se algum navegador ignorar, voltamos ao início */
         if(ev.data===YT.PlayerState.ENDED){ try{ytPlayer.seekTo(0);ytPlayer.playVideo();}catch(e){} }
       },
       onError:()=>{ ytFalhou=true; musicToggle.style.display='none'; }
@@ -624,13 +633,32 @@ window.onYouTubeIframeAPIReady=function(){
   s.onerror=()=>{ ytFalhou=true; musicToggle.style.display='none'; };
   document.head.appendChild(s);
 })();
-function tocar(){ querTocar=true; if(ytPronto&&ytPlayer){ try{ytPlayer.playVideo();}catch(e){} } }
-function pausar(){ querTocar=false; if(ytPronto&&ytPlayer){ try{ytPlayer.pauseVideo();}catch(e){} } }
+function tocar(){
+  querTocar=true;
+  if(!ytPronto||!ytPlayer) return;
+  try{
+    ytPlayer.unMute();
+    ytPlayer.setVolume(60);
+    /* precisa valer ANTES do play: é onStateChange quem acende o
+       "tocando agora", e ele pode responder na mesma hora */
+    comSom=true;
+    ytPlayer.playVideo();
+  }catch(e){}
+}
+function pausar(){
+  querTocar=false;
+  if(ytPronto&&ytPlayer){ try{ytPlayer.pauseVideo();}catch(e){} }
+}
 musicToggle.addEventListener('click',function(){
   if(!ytPronto||!ytPlayer) return;
   const st=ytPlayer.getPlayerState&&ytPlayer.getPlayerState();
-  if(st===YT.PlayerState.PLAYING) pausar(); else tocar();
+  if(st===YT.PlayerState.PLAYING && comSom) pausar(); else tocar();
 });
+/* rede de segurança: se o som não tiver entrado na abertura,
+   o primeiro toque em qualquer lugar da página libera */
+['touchend','click','keydown'].forEach(ev=>
+  document.addEventListener(ev,()=>{ if(!comSom) tocar(); },{once:true,passive:true})
+);
 
 /* ─── SPLASH ─── */
 document.getElementById('splash').addEventListener('click',function(){
