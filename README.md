@@ -30,6 +30,9 @@ O que muda com frequência está reunido no começo do `<script>`, em dois bloco
 | Bloco | O que controla |
 |---|---|
 | `CONFIG` | nomes, data, horário, cidade, link do mapa, WhatsApp, música, versículo |
+
+Para trocar a música, cole o link do YouTube em `CONFIG.musica` — vale
+`watch?v=…`, `youtu.be/…`, `/embed/…`, `/shorts/…` ou só o ID do vídeo.
 | `MANUAL` | os tópicos do Manual dos convidados (título, texto e ícone) |
 
 Para acrescentar um tópico ao manual, copie uma linha do `MANUAL` e troque o
@@ -57,5 +60,7 @@ hospedagem estática. Depois é só mandar o link no WhatsApp.
   apenas tira o mudo — por isso ela entra na hora, sem espera. Nenhum navegador
   de celular permite som antes de um toque do usuário, então esse é o mais
   automático que dá para ser.
-- Se o YouTube não carregar, o botão de música some sozinho em vez de ficar sem função
+- Se o vídeo não puder ser tocado dentro do convite (dono do vídeo bloqueou a
+  reprodução em outros sites) ou o YouTube não carregar, o botão de música vira
+  um link "Ouvir no YouTube" em vez de sumir
 - Respeita `prefers-reduced-motion` para quem prefere menos animação

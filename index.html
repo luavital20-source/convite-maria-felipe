@@ -485,8 +485,9 @@ const CONFIG = {
   dataEvento:'2026-11-28T16:00:00',            // usado na contagem regressiva
   dataTexto: '28 de Novembro de 2026',
 
-  // 🎵 música: vídeo do YouTube (https://youtu.be/VUf32ZK-Jd0)
-  youtubeId: 'VUf32ZK-Jd0',
+  // 🎵 música: cole aqui o link do YouTube em qualquer formato
+  //    (watch?v=…, youtu.be/…, /embed/…, /shorts/… ou só o ID)
+  musica: 'https://www.youtube.com/watch?v=VUf32ZK-Jd0',
 
   // 📍 local único — cerimônia e recepção
   mapLocal: 'https://www.google.com/maps?q=-22.86905288696289,-48.654335021972656&z=17&hl=pt-BR',
@@ -591,6 +592,15 @@ fotoOpcional('fotoLocal','artLocal');
 
 
 /* ─── MÚSICA (YouTube oculto) ─── */
+/* aceita watch?v=, youtu.be/, /embed/, /shorts/ ou o ID pelado */
+function idDoYouTube(link){
+  const t=String(link||'').trim();
+  if(!t) return '';
+  if(/^[\w-]{11}$/.test(t)) return t;
+  const m=t.match(/(?:v=|youtu\.be\/|\/embed\/|\/shorts\/|\/v\/)([\w-]{11})/);
+  return m?m[1]:'';
+}
+const YT_ID=idDoYouTube(CONFIG.musica);
 let ytPlayer=null, ytPronto=false, querTocar=false, ytFalhou=false, comSom=false;
 const musicToggle=document.getElementById('musicToggle');
 function setMusicIcon(p){
@@ -601,12 +611,12 @@ function setMusicIcon(p){
 }
 window.onYouTubeIframeAPIReady=function(){
   ytPlayer=new YT.Player('ytPlayer',{
-    height:'180',width:'320',videoId:CONFIG.youtubeId,
+    height:'180',width:'320',videoId:YT_ID,
     /* autoplay mudo: é o único que os navegadores deixam acontecer sozinho.
        Assim a música já está rodando (sem som) atrás da capa; o toque em
        "toque para abrir" só tira o mudo, e ela entra na hora. */
     playerVars:{autoplay:1,mute:1,controls:0,disablekb:1,fs:0,
-                modestbranding:1,playsinline:1,rel:0,loop:1,playlist:CONFIG.youtubeId},
+                modestbranding:1,playsinline:1,rel:0,loop:1,playlist:YT_ID},
     events:{
       onReady:()=>{
         ytPronto=true;
@@ -621,18 +631,27 @@ window.onYouTubeIframeAPIReady=function(){
         /* loop:1 já repete, mas se algum navegador ignorar, voltamos ao início */
         if(ev.data===YT.PlayerState.ENDED){ try{ytPlayer.seekTo(0);ytPlayer.playVideo();}catch(e){} }
       },
-      onError:()=>{ ytFalhou=true; musicToggle.style.display='none'; }
+      /* vídeo com reprodução bloqueada em outros sites: em vez de sumir,
+         o botão vira um link para ouvir a música no YouTube */
+      onError:()=>{ ytFalhou=true; viraLinkDoYouTube(); }
     }
   });
 };
 (function carregaYT(){
-  if(!CONFIG.youtubeId) return;
+  if(!YT_ID) return;
   const s=document.createElement('script');
   s.src='https://www.youtube.com/iframe_api';
   s.async=true;
-  s.onerror=()=>{ ytFalhou=true; musicToggle.style.display='none'; };
+  s.onerror=()=>{ ytFalhou=true; viraLinkDoYouTube(); };
   document.head.appendChild(s);
 })();
+function viraLinkDoYouTube(){
+  if(!YT_ID) return;
+  setMusicIcon(false);
+  musicToggle.querySelector('.mt-label').textContent='Ouvir no YouTube';
+  musicToggle.style.display='flex';
+  musicToggle.onclick=()=>window.open('https://www.youtube.com/watch?v='+YT_ID,'_blank','noopener');
+}
 function tocar(){
   querTocar=true;
   if(!ytPronto||!ytPlayer) return;
@@ -667,7 +686,7 @@ document.getElementById('splash').addEventListener('click',function(){
   setTimeout(()=>{
     this.style.display='none';
     document.getElementById('main').classList.add('visible');
-    if(CONFIG.youtubeId && !ytFalhou) musicToggle.style.display='flex';
+    if(YT_ID && !ytFalhou) musicToggle.style.display='flex';
     initReveal(); startCountdown();
     window.scrollTo(0,0);
   },950);
