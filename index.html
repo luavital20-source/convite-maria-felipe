@@ -226,11 +226,18 @@
      mas a caixa em volta o recorta a 1px e o deixa invisível */
   #ytHost{position:fixed;left:0;bottom:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1;}
 
-  /* ───────── PIX ───────── */
-  #pix{padding:58px 0;text-align:center;}
+  /* ───────── PRESENTES ───────── */
+  #presentes{padding:58px 0;text-align:center;}
   .pix-note{font-size:13.5px;line-height:1.85;color:var(--ink-soft);max-width:410px;margin:26px auto 0;}
+  .pix-ou{
+    display:flex;align-items:center;justify-content:center;gap:16px;
+    margin:36px auto 0;max-width:300px;
+    font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--olive-deep);text-indent:.28em;white-space:nowrap;
+  }
+  .pix-ou::before,.pix-ou::after{content:'';height:1px;flex:1;background:var(--line);}
   .pix-card{
-    margin:34px auto 0;max-width:340px;padding:26px 24px;
+    margin:24px auto 0;max-width:340px;padding:26px 24px;
     border:1px solid var(--line);background:rgba(255,255,255,.6);border-radius:20px;
     box-shadow:0 6px 18px rgba(85,99,47,.05);
   }
@@ -460,17 +467,24 @@
     </div>
   </section>
 
-  <!-- PIX -->
-  <section id="pix">
+  <!-- PRESENTES -->
+  <section id="presentes">
     <div class="inner">
       <p class="sec-label reveal">presentes</p>
       <h2 class="sec-title reveal">Para quem quiser <span class="it">presentear</span></h2>
       <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
       <p class="pix-note reveal d1">
         Sua presença já é o nosso maior presente. Mas, para você que quer nos
-        presentear, deixamos aqui a nossa chave Pix.
+        presentear, preparamos a nossa lista.
       </p>
-      <div class="pix-card reveal d2">
+      <p class="reveal d2" id="listaPresentes">
+        <a class="btn-fill" id="listaBtn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3 10h18v3H3zM4.5 13H19.5v7a1 1 0 01-1 1h-13a1 1 0 01-1-1zM12 10v11"/><path d="M12 10S10.5 4 8 5.2 10.2 10 12 10zM12 10s1.5-6 4-4.8S13.8 10 12 10z"/></svg>
+          Ver lista de presentes
+        </a>
+      </p>
+      <p class="pix-ou reveal d2" id="pixOu">ou, se preferir, por Pix</p>
+      <div class="pix-card reveal d2" id="pixCard">
         <p class="pix-label">Chave Pix · CPF</p>
         <p class="pix-key" id="pixChave"></p>
         <p class="pix-name" id="pixTitular"></p>
@@ -545,7 +559,10 @@ const CONFIG = {
   // 💚 confirmação de presença — WhatsApp (14) 99754-4105
   whatsapp: '5514997544105',
 
-  // 💚 Pix, para quem quiser presentear
+  // 🎁 lista de presentes (site externo). Vazio ('') esconde o botão.
+  listaPresentes: 'https://www.finalfeliz.de/maria--felip',
+
+  // 💚 Pix, para quem prefere transferir direto. Vazio ('') esconde o cartão.
   pixChave:   '45119432816',
   pixTitular: 'Maria Clara Prado',
 
@@ -622,11 +639,23 @@ document.getElementById('confirmBtn').href=waLink(
   'Olá! Gostaria de confirmar minha presença no casamento de Maria & Felipe 💍\n\nNome:\nQuantas pessoas:'
 );
 
-/* ─── Pix ─── */
-(function montaPix(){
-  const sec=document.getElementById('pix');
+/* ─── Presentes: lista externa + Pix ─── */
+(function montaPresentes(){
+  const sec=document.getElementById('presentes');
   if(!sec) return;
-  if(!CONFIG.pixChave){ sec.style.display='none'; return; }
+  const lista=document.getElementById('listaPresentes');
+  const card=document.getElementById('pixCard');
+  const ou=document.getElementById('pixOu');
+  const temLista=!!CONFIG.listaPresentes, temPix=!!CONFIG.pixChave;
+
+  if(temLista) document.getElementById('listaBtn').href=CONFIG.listaPresentes;
+  else lista.style.display='none';
+  if(!temPix) card.style.display='none';
+  /* o "ou" só faz sentido quando existem as duas opções */
+  if(!(temLista&&temPix)) ou.style.display='none';
+  if(!temLista&&!temPix){ sec.style.display='none'; return; }
+  if(!temPix) return;
+
   /* 11 dígitos = CPF, e aí mostramos formatado. Qualquer outro tipo de chave
      (telefone, e-mail, aleatória) aparece exatamente como foi escrita. */
   const so=CONFIG.pixChave.replace(/\D/g,'');
@@ -634,7 +663,7 @@ document.getElementById('confirmBtn').href=waLink(
   document.getElementById('pixChave').textContent=
     eCPF ? so.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4') : CONFIG.pixChave;
   document.getElementById('pixTitular').textContent=CONFIG.pixTitular||'';
-  sec.querySelector('.pix-label').textContent=eCPF?'Chave Pix · CPF':'Chave Pix';
+  card.querySelector('.pix-label').textContent=eCPF?'Chave Pix · CPF':'Chave Pix';
 
   document.getElementById('pixCopiar').addEventListener('click',async function(){
     /* copia a chave crua: é o que se cola no app do banco */

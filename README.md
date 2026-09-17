@@ -20,7 +20,7 @@ Armazém Secos e Molhados — Bairro Monte Alegre, Pratânia / São Manuel — S
 - Música ambiente tocando desde a abertura, com botão flutuante para pausar
 - Dress code: traje social, com as cores reservadas
 - **Manual dos convidados** — 10 tópicos em acordeão
-- Chave Pix para quem quiser presentear, com botão de copiar
+- Lista de presentes (site externo) e chave Pix, com botão de copiar
 - Confirmação de presença pelo WhatsApp **(14) 99754-4105**, sem prazo
 
 ## Como editar
@@ -31,10 +31,16 @@ O que muda com frequência está reunido no começo do `<script>`, em dois bloco
 |---|---|
 | `CONFIG` | nomes, data, horário, cidade, link do mapa, WhatsApp, música, Pix, versículo |
 
-### O Pix
+### Os presentes
 
-`CONFIG.pixChave` e `CONFIG.pixTitular` alimentam o cartão de presentes. Uma
-chave de 11 dígitos é reconhecida como CPF e exibida formatada
+A seção tem duas opções, e cada uma aparece só se estiver preenchida:
+
+- **`CONFIG.listaPresentes`** — link do site da lista (hoje, Final Feliz).
+  Abre em nova aba, para o convidado não perder o convite.
+- **`CONFIG.pixChave`** / **`CONFIG.pixTitular`** — o cartão do Pix.
+
+O separador "ou, se preferir, por Pix" só aparece quando as duas existem. Com
+os dois campos vazios, a seção inteira some do convite. Uma chave de 11 dígitos é reconhecida como CPF e exibida formatada
 (`451.194.328-16`); telefone, e-mail ou chave aleatória aparecem como foram
 escritos. O botão copia sempre a chave crua, que é o que se cola no app do
 banco. Com `pixChave: ''`, a seção inteira some do convite.
